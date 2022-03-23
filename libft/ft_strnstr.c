@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdehouck <rdehouck@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 16:25:42 by rdehouck          #+#    #+#             */
-/*   Updated: 2021/11/29 14:30:16 by rdehouck         ###   ########lyon.fr   */
+/*   Updated: 2022/03/23 14:26:06 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,3 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 	}
 	return (NULL);
 }
-/*
-int	main()
-{
-	char * test = "Bonjour";
-	char * test2 = "on";
-
-	printf("%s", ft_strnstr(test, test2, 50));
-}*/

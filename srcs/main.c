@@ -6,7 +6,7 @@
 /*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:26:08 by robindehouc       #+#    #+#             */
-/*   Updated: 2022/03/16 11:10:20 by robindehouc      ###   ########.fr       */
+/*   Updated: 2022/03/23 13:30:05 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (-1);
-	// ft_check_args(argc, argv);
+	ft_check_args(argc, argv);
 	stack_a = (t_list **)malloc(sizeof(t_list));
 	stack_b = (t_list **)malloc(sizeof(t_list));
 	*stack_a = NULL;

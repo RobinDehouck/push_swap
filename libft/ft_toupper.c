@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdehouck <rdehouck@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 15:06:21 by robindehouc       #+#    #+#             */
-/*   Updated: 2021/11/29 15:48:19 by rdehouck         ###   ########lyon.fr   */
+/*   Updated: 2022/03/23 14:26:23 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,3 @@ int	ft_toupper(int c)
 	}
 	return (c);
 }
-/*
-int	main()
-{
-	char test = 'a';
-	printf("%c", toupper(test));
-	printf("\n%c", test);
-	printf("\n%c", ft_toupper(test));
-	printf("\n%c", test);
-}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdehouck <rdehouck@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:02:51 by rdehouck          #+#    #+#             */
-/*   Updated: 2021/11/10 14:26:23 by rdehouck         ###   ########lyon.fr   */
+/*   Updated: 2022/03/23 14:26:02 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,3 @@ int	ft_strncmp(const char *source1, const char *source2, size_t n)
 	}
 	return ((unsigned char) source1[i] - (unsigned char) source2[i]);
 }
-/*
-int	main()
-{
-	char *source1 = "test\200";
-	char *source2 = "test\0";
-
-	printf("%d\n", ft_strncmp(source1, source2, 6));
-	printf("%d", strncmp(source1, source2, 6));
-}*/

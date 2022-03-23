@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdehouck <rdehouck@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:52:39 by rdehouck          #+#    #+#             */
-/*   Updated: 2021/11/29 14:29:56 by rdehouck         ###   ########lyon.fr   */
+/*   Updated: 2022/03/23 14:26:10 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,3 @@ char	*ft_strrchr(const char *s, int c)
 	}
 	return (NULL);
 }
-/*
-int	main()
-{
-	char *test = "bonjour";
-	printf("moi :%s", ft_strrchr(test, 't'));
-	printf("\ntst :%s", strrchr(test, 't'));
-}*/

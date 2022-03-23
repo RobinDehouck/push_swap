@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdehouck <rdehouck@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 23:00:09 by robindehouc       #+#    #+#             */
-/*   Updated: 2021/11/29 14:41:08 by rdehouck         ###   ########lyon.fr   */
+/*   Updated: 2022/03/23 14:25:56 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	str[j] = 0;
 	return (str);
 }
-
-/*
-int	main()
-{
-	char *source = " Bonjour ";
-	printf("%s", ft_substr(source, 3, 3));
-	
-}*/

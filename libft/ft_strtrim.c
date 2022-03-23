@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdehouck <rdehouck@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 11:57:47 by robindehouc       #+#    #+#             */
-/*   Updated: 2021/12/08 13:11:02 by rdehouck         ###   ########lyon.fr   */
+/*   Updated: 2022/03/23 14:26:15 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,3 @@ char	*ft_strtrim(char const *source, char const *set)
 	trimmed[i] = 0;
 	return (trimmed);
 }
-
-/*
-int	main()
-{
-	
-	printf("%s\n", ft_strtrim("   xxx   xxx", " x"));
-}
-*/

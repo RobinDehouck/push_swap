@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   instructions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:17:17 by robindehouc       #+#    #+#             */
-/*   Updated: 2022/03/15 19:21:40 by robindehouc      ###   ########.fr       */
+/*   Updated: 2022/03/23 13:33:10 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ss(t_list **stack_a, t_list **stack_b)
 	return (0);
 }
 
-// Takes the first element of one stack and puts it at the top of another | pa and pb
+// pa and pb
 
 int	push(t_list **stack_to, t_list **stack_from)
 {
