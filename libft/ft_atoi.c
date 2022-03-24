@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdehouck <rdehouck@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 13:36:05 by robindehouc       #+#    #+#             */
-/*   Updated: 2021/11/29 15:52:26 by rdehouck         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 13:57:40 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_putnumber(const char *source, int i)
+static long	ft_putnumber(const char *source, int i)
 {
-	int	j;
-	int	number;
+	int		j;
+	long	number;
 
 	j = 0;
 	number = 0;
@@ -39,11 +39,11 @@ static int	ft_clean(const char *source)
 	return (i);
 }
 
-int	ft_atoi(const char *number)
+long	ft_atoi(const char *number)
 {
-	int	sign;
-	int	i;
-	int	final_number;
+	int		sign;
+	int		i;
+	long	final_number;
 
 	sign = 1;
 	i = ft_clean(number);
@@ -57,11 +57,3 @@ int	ft_atoi(const char *number)
 	final_number = ft_putnumber(number, i);
 	return (final_number * sign);
 }
-/*
-int main()
-{
-	printf("%d\n", ft_atoi("\t\n\r\v\f  2147483648 \n"));
-	printf("%d", atoi("\t\n\r\v\f  2147483648 \n"));
-	
-}
-*/

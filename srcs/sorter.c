@@ -6,7 +6,7 @@
 /*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:18:06 by robindehouc       #+#    #+#             */
-/*   Updated: 2022/03/15 19:21:35 by robindehouc      ###   ########.fr       */
+/*   Updated: 2022/03/24 13:43:24 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,47 @@
 
 static int	get_min(t_list **stack, int val)
 {
-	t_list	*head;
+	t_list	*node;
 	int		min;
 
-	head = *stack;
-	min = head->index;
-	while (head->next)
+	node = *stack;
+	min = node->index;
+	while (node->next)
 	{
-		head = head->next;
-		if ((head->index < min) && head->index != val)
-			min = head->index;
+		node = node->next;
+		if ((node->index < min) && node->index != val)
+			min = node->index;
 	}
 	return (min);
 }
 
 static void	sort_3(t_list **stack_a)
 {
-	t_list	*head;
+	t_list	*node;
 	int		min;
 	int		next_min;
 
-	head = *stack_a;
+	node = *stack_a;
 	min = get_min(stack_a, -1);
 	next_min = get_min(stack_a, min);
 	if (is_sorted(stack_a))
 		return ;
-	if (head->index == min && head->next->index != next_min)
+	if (node->index == min && node->next->index != next_min)
 	{
 		ra(stack_a);
 		sa(stack_a);
 		rra(stack_a);
 	}
-	else if (head->index == next_min)
+	else if (node->index == next_min)
 	{
-		if (head->next->index == min)
+		if (node->next->index == min)
 			sa(stack_a);
 		else
 			rra(stack_a);
 	}
 	else
 	{
-		if (head->next->index == min)
+		if (node->next->index == min)
 			ra(stack_a);
 		else
 		{
@@ -113,7 +113,7 @@ void	sort_5(t_list **stack_a, t_list **stack_b)
 	pa(stack_a, stack_b);
 }
 
-void	simple_sort(t_list **stack_a, t_list **stack_b)
+void	custom_sorter(t_list **stack_a, t_list **stack_b)
 {
 	int	size;
 

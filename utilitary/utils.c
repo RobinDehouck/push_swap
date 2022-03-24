@@ -6,15 +6,15 @@
 /*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:20:56 by robindehouc       #+#    #+#             */
-/*   Updated: 2022/03/15 19:21:21 by robindehouc      ###   ########.fr       */
+/*   Updated: 2022/03/24 13:43:24 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/push_swap.h"
 
-void	ft_error(char *msg)
+void	ft_print(char *str)
 {
-	ft_putendl_fd(msg, 1);
+	ft_putendl_fd(str, 1);
 	exit(0);
 }
 
@@ -31,45 +31,45 @@ void	ft_free(char **str)
 
 int	is_sorted(t_list **stack)
 {
-	t_list	*head;
+	t_list	*node;
 
-	head = *stack;
-	while (head && head->next)
+	node = *stack;
+	while (node && node->next)
 	{
-		if (head->value > head->next->value)
+		if (node->value > node->next->value)
 			return (0);
-		head = head->next;
+		node = node->next;
 	}
 	return (1);
 }
 
 int	get_distance(t_list **stack, int index)
 {
-	t_list	*head;
+	t_list	*node;
 	int		distance;
 
 	distance = 0;
-	head = *stack;
-	while (head)
+	node = *stack;
+	while (node)
 	{
-		if (head->index == index)
+		if (node->index == index)
 			break ;
 		distance++;
-		head = head->next;
+		node = node->next;
 	}
 	return (distance);
 }
 
 void	make_top(t_list **stack, int distance)
 {
-	t_list	*head;
+	t_list	*node;
 	int		tmp;
 
 	if (distance == 0)
 		return ;
-	head = *stack;
-	tmp = ft_lstsize(head) - distance;
-	if (distance <= (ft_lstsize(head) / 2))
+	node = *stack;
+	tmp = ft_lstsize(node) - distance;
+	if (distance <= (ft_lstsize(node) / 2))
 	{
 		while (distance-- > 0)
 			ra(stack);
@@ -83,14 +83,14 @@ void	make_top(t_list **stack, int distance)
 
 void	free_stack(t_list **stack)
 {
-	t_list	*head;
+	t_list	*node;
 	t_list	*tmp;
 
-	head = *stack;
-	while (head)
+	node = *stack;
+	while (node)
 	{
-		tmp = head;
-		head = head->next;
+		tmp = node;
+		node = node->next;
 		free(tmp);
 	}
 	free(stack);

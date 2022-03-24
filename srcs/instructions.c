@@ -6,7 +6,7 @@
 /*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:17:17 by robindehouc       #+#    #+#             */
-/*   Updated: 2022/03/23 13:33:10 by robindehouc      ###   ########.fr       */
+/*   Updated: 2022/03/24 13:43:24 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@
 
 int	swap(t_list **stack)
 {
-	t_list	*head;
+	t_list	*node;
 	t_list	*next;
 	int		tmp_val;
 	int		tmp_index;
 
 	if (ft_lstsize(*stack) < 2)
 		return (-1);
-	head = *stack;
-	next = head->next;
-	if (!head && !next)
-		ft_error("Error occured while swapping!");
-	tmp_val = head->value;
-	tmp_index = head->index;
-	head->value = next->value;
-	head->index = next->index;
+	node = *stack;
+	next = node->next;
+	if (!node && !next)
+		ft_print("Error occured while swapping!");
+	tmp_val = node->value;
+	tmp_index = node->index;
+	node->value = next->value;
+	node->index = next->index;
 	next->value = tmp_val;
 	next->index = tmp_index;
 	return (0);
@@ -67,25 +67,25 @@ int	ss(t_list **stack_a, t_list **stack_b)
 int	push(t_list **stack_to, t_list **stack_from)
 {
 	t_list	*tmp;
-	t_list	*head_to;
-	t_list	*head_from;
+	t_list	*node_to;
+	t_list	*node_from;
 
 	if (ft_lstsize(*stack_from) == 0)
 		return (-1);
-	head_to = *stack_to;
-	head_from = *stack_from;
-	tmp = head_from;
-	head_from = head_from->next;
-	*stack_from = head_from;
-	if (!head_to)
+	node_to = *stack_to;
+	node_from = *stack_from;
+	tmp = node_from;
+	node_from = node_from->next;
+	*stack_from = node_from;
+	if (!node_to)
 	{
-		head_to = tmp;
-		head_to->next = NULL;
-		*stack_to = head_to;
+		node_to = tmp;
+		node_to->next = NULL;
+		*stack_to = node_to;
 	}
 	else
 	{
-		tmp->next = head_to;
+		tmp->next = node_to;
 		*stack_to = tmp;
 	}
 	return (0);
@@ -111,16 +111,16 @@ int	pb(t_list **stack_a, t_list **stack_b)
 
 int	rotate(t_list **stack)
 {
-	t_list	*head;
+	t_list	*node;
 	t_list	*tail;
 
 	if (ft_lstsize(*stack) < 2)
 		return (-1);
-	head = *stack;
-	tail = ft_lstlast(head);
-	*stack = head->next;
-	head->next = NULL;
-	tail->next = head;
+	node = *stack;
+	tail = ft_lstlast(node);
+	*stack = node->next;
+	node->next = NULL;
+	tail->next = node;
 	return (0);
 }
 
@@ -155,21 +155,21 @@ int	rr(t_list **stack_a, t_list **stack_b)
 
 int	reverseRotate(t_list **stack)
 {
-	t_list	*head;
+	t_list	*node;
 	t_list	*tail;
 
 	if (ft_lstsize(*stack) < 2)
 		return (-1);
-	head = *stack;
-	tail = ft_lstlast(head);
-	while (head)
+	node = *stack;
+	tail = ft_lstlast(node);
+	while (node)
 	{
-		if (head->next->next == NULL)
+		if (node->next->next == NULL)
 		{
-			 head->next = NULL;
+			 node->next = NULL;
 			 break ;
 		}
-		head = head->next;
+		node = node->next;
 	}
 	tail->next = *stack;
 	*stack = tail;

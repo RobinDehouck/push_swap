@@ -6,7 +6,7 @@
 /*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:24:58 by robindehouc       #+#    #+#             */
-/*   Updated: 2022/03/23 14:25:35 by robindehouc      ###   ########.fr       */
+/*   Updated: 2022/03/24 13:43:24 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ typedef struct s_list
 }				t_list;
 
 t_list	*ft_lstnew(int value);
-t_list	*ft_lstlast(t_list *head);
+t_list	*ft_lstlast(t_list *node);
 void	ft_lstadd_front(t_list **stack, t_list *new);
 void	ft_lstadd_back(t_list **stack, t_list *new);
-void	printList(t_list *head);
-int		ft_lstsize(t_list *head);
-void	ft_error(char *msg);
+void	printList(t_list *node);
+int		ft_lstsize(t_list *node);
+void	ft_print(char *str);
 void	ft_check_args(int argc, char **argv);
 int		is_sorted(t_list **stack);
 int		get_distance(t_list **stack, int index);
 void	make_top(t_list **stack, int distance);
 void	free_stack(t_list **stack);
 void	ft_free(char **str);
-void	radix_sort(t_list **stack_a, t_list **stack_b);
-void	simple_sort(t_list **stack_a, t_list **stack_b);
+void	radix_sorter(t_list **stack_a, t_list **stack_b);
+void	custom_sorter(t_list **stack_a, t_list **stack_b);
 void	index_stack(t_list **stack);
 void	sort_5(t_list **stack_a, t_list **stack_b);
 int		swap(t_list **stack);

@@ -6,7 +6,7 @@
 /*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:26:08 by robindehouc       #+#    #+#             */
-/*   Updated: 2022/03/23 13:30:05 by robindehouc      ###   ########.fr       */
+/*   Updated: 2022/03/24 13:39:49 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 static void	sort_stack(t_list **stack_a, t_list **stack_b)
 {
-	if (ft_lstsize(*stack_a) <= 5)
-		simple_sort(stack_a, stack_b);
+	if (ft_lstsize(*stack_a) > 5)
+		radix_sorter(stack_a, stack_b);
 	else
-	radix_sort(stack_a, stack_b);
+		custom_sorter(stack_a, stack_b);
+	
 }
 
 static void	initStack(t_list **stack, int argc, char **argv)

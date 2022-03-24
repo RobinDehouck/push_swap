@@ -6,13 +6,13 @@
 /*   By: robindehouck <robindehouck@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:19:55 by robindehouc       #+#    #+#             */
-/*   Updated: 2022/03/15 19:21:31 by robindehouc      ###   ########.fr       */
+/*   Updated: 2022/03/24 14:08:51 by robindehouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/push_swap.h"
-
-static int	ft_contains(int num, char **argv, int i)
+// Check for duplicates
+static int	ft_duplicate(int num, char **argv, int i)
 {
 	i++;
 	while (argv[i])
@@ -24,7 +24,8 @@ static int	ft_contains(int num, char **argv, int i)
 	return (0);
 }
 
-static int	ft_isnum(char *num)
+// Check if it's a number
+static int	ft_isn(char *num)
 {
 	int	i;
 
@@ -39,6 +40,13 @@ static int	ft_isnum(char *num)
 	}
 	return (1);
 }
+
+// error check  will exit the program if one of the following is found: 
+//									1) if there is a duplicate value
+//									2) if it's not an number
+//									3) if it's larger than an int 
+//											(atoi return a long, and strlen(args[i]) > 15
+//												will return error)
 
 void	ft_check_args(int argc, char **argv)
 {
@@ -57,12 +65,12 @@ void	ft_check_args(int argc, char **argv)
 	while (args[i])
 	{
 		tmp = ft_atoi(args[i]);
-		if (!ft_isnum(args[i]))
-			ft_error("Error");
-		if (ft_contains(tmp, args, i))
-			ft_error("Error");
-		if (tmp < -2147483648 || tmp > 2147483647)
-			ft_error("Error");
+		if (ft_duplicate(tmp, args, i))
+			ft_print("Error");
+		if (!ft_isn(args[i]))
+			ft_print("Error");
+		if (tmp < -2147483648 || tmp > 2147483647 || ft_strlen(args[i]) > 15)
+			ft_print("Error");
 		i++;
 	}
 	if (argc == 2)
