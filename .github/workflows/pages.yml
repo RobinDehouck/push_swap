@@ -3,6 +3,7 @@ name: Deploy meu-ciclo to GitHub Pages
 on:
   push:
     branches:
+      - main
       - claude/meu-ciclo-vercel-deploy-N0qwR
     paths:
       - "meu-ciclo/**"
