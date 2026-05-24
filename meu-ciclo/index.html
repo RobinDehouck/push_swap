@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Meu Ciclo">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>Meu Ciclo</title>
+<style>
+  :root{
+    --sf:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",sans-serif;
+    /* iOS system colors (light) */
+    --bg:#f2f2f7;
+    --bg-elev:#ffffff;
+    --sep:rgba(60,60,67,0.12);
+    --label:#000000;
+    --label2:rgba(60,60,67,0.6);
+    --label3:rgba(60,60,67,0.3);
+    --green:#34c759;
+    --red:#ff3b30;
+    --orange:#ff9500;
+    --blue:#007aff;
+    --teal:#5ac8fa;
+    --pink:#ff2d92;
+    --yellow:#ffcc00;
+    --fill:rgba(120,120,128,0.12);
+    --fill2:rgba(120,120,128,0.2);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000000;
+      --bg-elev:#1c1c1e;
+      --sep:rgba(84,84,88,0.4);
+      --label:#ffffff;
+      --label2:rgba(235,235,245,0.6);
+      --label3:rgba(235,235,245,0.3);
+      --fill:rgba(120,120,128,0.24);
+      --fill2:rgba(120,120,128,0.36);
+    }
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;overflow:hidden;}
+  body{
+    font-family:var(--sf);
+    color:var(--label);
+    background:var(--bg);
+    display:flex;flex-direction:column;
+    height:100dvh;
+    padding:calc(env(safe-area-inset-top) + 8px) 16px calc(env(safe-area-inset-bottom) + 8px);
+    -webkit-font-smoothing:antialiased;
+    letter-spacing:-0.01em;
+  }
+  .app{display:flex;flex-direction:column;height:100%;gap:11px;}
+
+  /* ---- large-title header (iOS) ---- */
+  header{flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;padding:4px 2px 0;}
+  header .htxt{display:flex;flex-direction:column;}
+  header h1{font-size:30px;font-weight:700;letter-spacing:0.37px;line-height:1.1;}
+  header .sub{font-size:13px;color:var(--label2);margin-top:2px;font-weight:400;}
+  .gearbtn{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--sep);
+    background:var(--bg-elev);color:var(--blue);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto;
+    box-shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 12px rgba(0,0,0,0.06);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
+    transition:transform .35s cubic-bezier(.3,1.3,.4,1),background .15s,box-shadow .15s;}
+  .gearbtn svg{width:20px;height:20px;transition:transform .4s cubic-bezier(.3,1.3,.4,1);}
+  .gearbtn:active{transform:scale(0.9);background:var(--fill);box-shadow:0 1px 2px rgba(0,0,0,0.1);}
+  .gearbtn:active svg{transform:rotate(50deg);}
+
+  .pill{font-size:11px;font-weight:600;color:var(--blue);background:var(--fill);
+    border-radius:6px;padding:2px 7px;letter-spacing:0;display:inline-flex;align-items:center;gap:4px;width:fit-content;margin-top:5px;}
+  .pill svg{width:11px;height:11px;}
+
+  main{flex:1;display:flex;flex-direction:column;gap:11px;min-height:0;}
+
+  /* ---- iOS grouped card ---- */
+  .card{background:var(--bg-elev);border-radius:18px;flex:0 0 auto;}
+  .card.pad{padding:15px 16px;}
+
+  /* score row */
+  .score{display:flex;align-items:center;gap:14px;position:relative;}
+  .ic-badge{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .ic-badge svg{width:26px;height:26px;}
+  .score .body{flex:1;min-width:0;}
+  .eyebrow{font-size:12px;font-weight:600;color:var(--label2);letter-spacing:0.2px;text-transform:none;}
+  .bignum{font-size:33px;font-weight:700;line-height:1.05;letter-spacing:0.3px;margin:1px 0;}
+  .bignum .u{font-size:17px;font-weight:600;color:var(--label2);}
+  .meta{font-size:13px;color:var(--label2);display:flex;align-items:center;gap:5px;}
+  .meta svg{width:13px;height:13px;}
+
+  /* focus row */
+  .focus .body{flex:1;min-width:0;}
+  .barwrap{height:8px;border-radius:4px;background:var(--fill);overflow:hidden;margin:5px 0 4px;}
+  .barfill{height:100%;border-radius:4px;transition:width .35s cubic-bezier(.2,.7,.2,1);}
+  .fhead{display:flex;justify-content:space-between;align-items:baseline;}
+  .fhead .fnum{font-size:22px;font-weight:700;letter-spacing:0.3px;}
+  .fhead .fnum .u{font-size:13px;font-weight:600;color:var(--label2);}
+
+  /* decision row */
+  .decision{display:flex;align-items:center;gap:13px;}
+  .decision .dico{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .decision .dico svg{width:17px;height:17px;color:#fff;}
+  .decision .body{flex:1;min-width:0;}
+  .decision .t{font-size:15px;font-weight:600;line-height:1.25;}
+  .decision .s{font-size:12.5px;color:var(--label2);line-height:1.35;margin-top:2px;}
+
+  /* med note */
+  .mednote{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;
+    background:color-mix(in srgb, var(--orange) 12%, var(--bg-elev));
+    border-radius:14px;flex:0 0 auto;}
+  .mednote svg{width:17px;height:17px;color:var(--orange);flex:0 0 auto;margin-top:1px;}
+  .mednote p{font-size:12px;line-height:1.4;color:var(--label);}
+  .mednote b{font-weight:600;}
+
+  /* chart card */
+  .chartcard{flex:1;min-height:0;display:flex;flex-direction:column;padding:12px 12px 6px;}
+  .chead{display:flex;justify-content:space-between;align-items:center;padding:0 4px 4px;}
+  .chead .ct{font-size:13px;font-weight:600;color:var(--label2);}
+  .chead .hint{font-size:11px;color:var(--label3);display:flex;align-items:center;gap:4px;}
+  .chead .hint svg{width:12px;height:12px;}
+  .chartwrap{flex:1;min-height:0;}
+  svg.chart{width:100%;height:100%;display:block;}
+  .clegend{display:flex;gap:18px;justify-content:center;padding:5px 0 2px;font-size:11px;color:var(--label2);}
+  .clegend span{display:inline-flex;align-items:center;gap:5px;}
+  .clegend i{width:9px;height:9px;border-radius:3px;}
+
+  .footer{flex:0 0 auto;display:flex;justify-content:center;gap:18px;font-size:12px;color:var(--label2);padding-top:1px;}
+  .footer span{display:inline-flex;align-items:center;gap:5px;}
+  .footer svg{width:13px;height:13px;}
+  .footer b{font-weight:600;color:var(--label);}
+
+  .today-btn{position:absolute;top:0;right:0;border:none;background:var(--blue);color:#fff;
+    font-family:var(--sf);font-size:13px;font-weight:600;padding:6px 13px;border-radius:18px;cursor:pointer;}
+  .today-btn:active{opacity:0.6;}
+
+  /* ---------- setup ---------- */
+  .setup{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:0 6px;}
+  .setup .hero{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;margin-bottom:6px;}
+  .setup .hero .ring{width:64px;height:64px;border-radius:50%;background:var(--fill);display:flex;align-items:center;justify-content:center;}
+  .setup .hero .ring svg{width:34px;height:34px;color:var(--pink);}
+  .setup h2{font-size:24px;font-weight:700;line-height:1.2;letter-spacing:0.2px;}
+  .setup p{font-size:14px;color:var(--label2);line-height:1.45;}
+  .setup .group{background:var(--bg-elev);border-radius:14px;overflow:hidden;}
+  .setup .grow{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;}
+  .setup .grow label{font-size:16px;font-weight:400;}
+  input[type=date]{font-family:var(--sf);font-size:16px;color:var(--blue);background:var(--fill);
+    border:none;border-radius:8px;padding:7px 11px;font-weight:500;}
+
+  .btn{border:none;border-radius:14px;font-family:var(--sf);font-size:17px;font-weight:600;
+    padding:15px;color:#fff;background:var(--blue);cursor:pointer;width:100%;}
+  .btn:active{opacity:0.8;}
+
+  /* ---------- settings sheet ---------- */
+  .sheet{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,0.4);display:none;align-items:flex-end;}
+  .sheet.open{display:flex;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .sheet-inner{width:100%;background:var(--bg);border-radius:14px 14px 0 0;
+    padding:8px 16px calc(env(safe-area-inset-bottom) + 18px);max-height:92dvh;overflow-y:auto;
+    animation:slide .32s cubic-bezier(.2,.8,.2,1);}
+  @keyframes slide{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .grabber{width:36px;height:5px;border-radius:3px;background:var(--label3);margin:8px auto 14px;}
+  .sheet h3{font-size:22px;font-weight:700;margin-bottom:14px;letter-spacing:0.3px;}
+  .seclabel{font-size:13px;color:var(--label2);font-weight:400;padding:0 4px 7px;margin-top:18px;}
+  .glist{background:var(--bg-elev);border-radius:12px;overflow:hidden;}
+  .gitem{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;min-height:48px;}
+  .gitem + .gitem{border-top:1px solid var(--sep);}
+  .gitem .gl{font-size:16px;}
+  .gitem .gl small{display:block;font-size:12px;color:var(--label2);margin-top:1px;}
+  .stepper{display:flex;align-items:center;gap:0;background:var(--fill);border-radius:8px;overflow:hidden;}
+  .stepper button{width:40px;height:32px;border:none;background:transparent;color:var(--blue);font-size:20px;cursor:pointer;}
+  .stepper button:active{background:var(--fill2);}
+  .stepper .sv{min-width:54px;text-align:center;font-size:15px;font-weight:600;}
+  .stepper .sv small{font-weight:400;color:var(--label2);font-size:11px;}
+
+  /* iOS switch */
+  .switch{width:51px;height:31px;border-radius:16px;border:none;background:var(--fill2);position:relative;cursor:pointer;transition:background .25s;flex:0 0 auto;}
+  .switch .knob{position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;
+    box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:left .25s cubic-bezier(.3,1.4,.5,1);}
+  .switch[aria-checked="true"]{background:var(--green);}
+  .switch[aria-checked="true"] .knob{left:22px;}
+
+  .doses{display:flex;gap:6px;flex-wrap:wrap;padding:12px 4px 0;}
+  .dose{flex:1;min-width:42px;padding:11px 2px;border-radius:9px;border:none;background:var(--fill);
+    color:var(--label);font-family:var(--sf);font-size:15px;font-weight:600;cursor:pointer;}
+  .dose[data-mg="0"]{min-width:72px;font-size:13px;}
+  .dose.sel{background:var(--blue);color:#fff;}
+  .doses-hint{font-size:12px;color:var(--label2);padding:8px 4px 0;line-height:1.35;}
+
+  .btn-row{margin-top:20px;display:flex;flex-direction:column;gap:10px;}
+  .btn-ghost{border:none;border-radius:14px;background:var(--bg-elev);color:var(--red);
+    font-family:var(--sf);font-size:17px;font-weight:400;padding:15px;cursor:pointer;}
+  .disclaimer{font-size:11px;line-height:1.45;color:var(--label2);text-align:center;margin-top:16px;padding:0 8px;}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+
+<!-- settings sheet -->
+<div class="sheet" id="sheet">
+  <div class="sheet-inner">
+    <div class="grabber"></div>
+    <h3>Ajustes</h3>
+
+    <div class="seclabel">Ciclo</div>
+    <div class="glist">
+      <div class="gitem">
+        <span class="gl">Início da menstruação</span>
+        <input type="date" id="cfgDate">
+      </div>
+      <div class="gitem">
+        <span class="gl">Duração do ciclo</span>
+        <div class="stepper">
+          <button id="cycMinus">−</button>
+          <div class="sv"><span id="cycVal">28</span><br><small>dias</small></div>
+          <button id="cycPlus">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="seclabel">TDAH</div>
+    <div class="glist">
+      <div class="gitem">
+        <span class="gl">Modo TDAH<small>Mostra foco / função executiva</small></span>
+        <button class="switch" id="tdahToggle" role="switch" aria-checked="false"><span class="knob"></span></button>
+      </div>
+    </div>
+
+    <div id="medSection" style="display:none">
+      <div class="seclabel">Medicação — Venvanse (lisdexanfetamina)</div>
+      <div class="glist" style="padding:4px 12px 12px">
+        <div class="doses" id="doses">
+          <button data-mg="0" class="dose">Nenhuma</button>
+          <button data-mg="20" class="dose">20</button>
+          <button data-mg="30" class="dose">30</button>
+          <button data-mg="40" class="dose">40</button>
+          <button data-mg="50" class="dose">50</button>
+          <button data-mg="60" class="dose">60</button>
+          <button data-mg="70" class="dose">70</button>
+        </div>
+        <div class="doses-hint">mg por dia, pela manhã. Referência: início 30 mg, máximo 70 mg.</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" id="cfgSave">Salvar</button>
+      <button class="btn-ghost" id="cfgReset">Recomeçar do zero</button>
+    </div>
+    <p class="disclaimer">Estimativas educativas baseadas em pesquisa preliminar. Variam muito de pessoa para pessoa e não substituem avaliação médica. Nunca ajuste medicação por conta própria.</p>
+  </div>
+</div>
+
+<!-- SVG icon defs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-gear" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M10.6 2.8h2.8l.5 2.4a6.6 6.6 0 0 1 1.9 1.1l2.3-.8 1.4 2.4-1.8 1.6a6.6 6.6 0 0 1 0 2.2l1.8 1.6-1.4 2.4-2.3-.8a6.6 6.6 0 0 1-1.9 1.1l-.5 2.4h-2.8l-.5-2.4a6.6 6.6 0 0 1-1.9-1.1l-2.3.8-1.4-2.4 1.8-1.6a6.6 6.6 0 0 1 0-2.2L3.8 7.9l1.4-2.4 2.3.8a6.6 6.6 0 0 1 1.9-1.1Z"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-face-great" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M8 14c.9 1.4 2.3 2.2 4 2.2s3.1-.8 4-2.2"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M8.5 9.5h.01M15.5 9.5h.01"/></symbol>
+  <symbol id="i-face-good" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M8.5 14.2c.8.9 2 1.5 3.5 1.5s2.7-.6 3.5-1.5"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M8.5 9.5h.01M15.5 9.5h.01"/></symbol>
+  <symbol id="i-face-neutral" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M8.5 15h7"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M8.5 9.5h.01M15.5 9.5h.01"/></symbol>
+  <symbol id="i-face-low" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M8 16c.9-1.4 2.3-2.2 4-2.2s3.1.8 4 2.2"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M8.5 9.5h.01M15.5 9.5h.01"/></symbol>
+  <symbol id="i-face-bad" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M8 16.2c.9-1.5 2.3-2.4 4-2.4s3.1.9 4 2.4"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M7.5 9l2 1.4M16.5 9l-2 1.4"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M3 12c1.5-2.5 3-2.5 4.5 0S10.5 14.5 12 12s3-2.5 4.5 0 3 2.5 4.5 0"/></symbol>
+  <symbol id="i-battery-low" viewBox="0 0 24 24"><rect x="2.5" y="8" width="16" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M21 11v2"/><rect x="4.5" y="10" width="3.5" height="4" rx="1" fill="currentColor"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7"/></symbol>
+  <symbol id="i-minus-c" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M7 12h10"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.9"/><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.9"/><path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" d="M12 7.5v5M12 16h.01"/></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><rect x="3" y="8.5" width="18" height="7" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path stroke="currentColor" stroke-width="1.7" d="M12 8.7v6.6"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 3.5 21 19H3z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 9.5v4M12 16.3h.01"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M12 3.5s6 6.3 6 10.2A6 6 0 0 1 6 13.7C6 9.8 12 3.5 12 3.5Z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></symbol>
+  <symbol id="i-tap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M9 11V6.5a1.8 1.8 0 0 1 3.5 0V11m0-1.5a1.7 1.7 0 0 1 3.4 0V12m0-1a1.7 1.7 0 0 1 3.4 0v3.5a5 5 0 0 1-5 5h-1.6a4 4 0 0 1-3-1.4l-3-3.4a1.7 1.7 0 0 1 2.5-2.3L9 14"/></symbol>
+  <symbol id="i-flower" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 9.6c-1-2.6-1-4.4 0-5.6 1 1.2 1 3 0 5.6Zm0 4.8c1 2.6 1 4.4 0 5.6-1-1.2-1-3 0-5.6Zm-2.4-2.4c-2.6-1-4.4-1-5.6 0 1.2 1 3 1 5.6 0Zm4.8 0c2.6-1 4.4-1 5.6 0-1.2 1-3 1-5.6 0Z"/></symbol>
+</defs></svg>
+
+<script>
+/* ===================== modelos ===================== */
+const BASE=[-70,-75,-60,-40,-15,10,25,40,55,70,80,88,90,85,70,55,40,25,10,-5,-20,-35,-50,-60,-70,-78,-82,-85];
+const FOCUS_BASE=[-55,-62,-55,-40,-20,5,25,45,62,76,84,80,55,72,80,70,55,38,18,-2,-22,-40,-55,-66,-72,-70,-64,-58];
+const PERIOD_DAYS=5, OVU_BASE=13;
+
+function resample(arr,len){const o=[];for(let i=0;i<len;i++){const t=i/(len-1)*(arr.length-1);const a=Math.floor(t),b=Math.min(a+1,arr.length-1),f=t-a;o.push(Math.round(arr[a]*(1-f)+arr[b]*f));}return o;}
+const moodCurve=len=>resample(BASE,len);
+const focusCurve=len=>resample(FOCUS_BASE,len);
+
+const MED_DOSES=[0,20,30,40,50,60,70];
+function medGain(mg){if(!mg||mg<=0)return 0;return 46*(1-Math.exp(-mg/38));}
+function medPhaseFactor(idx,len){const ovu=Math.round(OVU_BASE/27*(len-1));if(idx>=len-6)return 0.6;if(idx>ovu+1)return 0.8;return 1;}
+function applyMed(focus,len,mg){if(!mg)return focus.slice();const g=medGain(mg);return focus.map((v,i)=>Math.min(100,Math.round(v+g*medPhaseFactor(i,len))));}
+
+function toPct(v){return Math.round((v+100)/2);}
+function moodIcon(v){if(v>=60)return'i-face-great';if(v>=25)return'i-face-good';if(v>-15)return'i-face-neutral';if(v>-55)return'i-face-low';return'i-face-bad';}
+function moodWord(v){if(v>=60)return'Ótima';if(v>=25)return'Boa';if(v>-15)return'Neutra';if(v>-55)return'Baixa';return'Difícil';}
+function moodColor(v){return v>=25?'var(--green)':v>-15?'var(--yellow)':v>-55?'var(--orange)':'var(--red)';}
+function focusIcon(v){return v>=25?'i-target':v>-15?'i-wave':'i-battery-low';}
+function focusWord(v){if(v>=60)return'Foco alto';if(v>=25)return'Foco bom';if(v>-15)return'Foco médio';if(v>-55)return'Foco baixo';return'Foco muito baixo';}
+function phaseFor(idx,len){const ovu=Math.round(OVU_BASE/27*(len-1));
+  if(idx<PERIOD_DAYS)return{name:'Menstruação',icon:'i-drop'};
+  if(idx<ovu-1)return{name:'Fase folicular',icon:'i-flower'};
+  if(idx<=ovu+1)return{name:'Ovulação',icon:'i-drop'};
+  if(idx<len-5)return{name:'Fase lútea',icon:'i-moon'};
+  return{name:'Pré-menstrual (TPM)',icon:'i-moon'};}
+
+function decisionFor(v){
+  if(v>=55)return{color:'var(--green)',icon:'i-check',t:'Ótimo momento para decidir',s:'Humor e clareza no auge — bom para escolhas importantes.'};
+  if(v>=10)return{color:'var(--yellow)',icon:'i-minus-c',t:'Momento razoável',s:'Dá para decidir, mas confira como se sente no dia.'};
+  if(v>-40)return{color:'var(--orange)',icon:'i-clock',t:'Talvez esperar',s:'Humor em queda — adie o que não for urgente.'};
+  return{color:'var(--red)',icon:'i-stop',t:'Evite decidir agora',s:'Período de baixa — deixe escolhas grandes para depois.'};
+}
+function decisionForTdah(mood,focus,idx,len){
+  const ovu=Math.round(OVU_BASE/27*(len-1)), periOvu=Math.abs(idx-ovu)<=1;
+  if(focus>=55&&mood>=20){
+    if(periOvu)return{color:'var(--yellow)',icon:'i-minus-c',t:'Boa clareza, cuidado com impulsos',s:'Foco alto perto da ovulação — ótimo para pensar, mas evite decisões impulsivas.'};
+    return{color:'var(--green)',icon:'i-check',t:'Ótimo momento para decidir',s:'Foco e humor no auge — sua janela mais clara do ciclo.'};
+  }
+  if(focus>=20)return{color:'var(--yellow)',icon:'i-minus-c',t:'Momento razoável',s:'Foco ok. Dá para decidir, mas confira como está no dia.'};
+  if(focus>-35)return{color:'var(--orange)',icon:'i-clock',t:'Talvez esperar',s:'Função executiva em queda — adie o que não for urgente.'};
+  return{color:'var(--red)',icon:'i-stop',t:'Evite decidir agora',s:'Foco e regulação baixos — deixe escolhas grandes para depois.'};
+}
+
+/* ===================== persistência ===================== */
+const KEY='meuCiclo.v2';
+const load=()=>{try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null;}catch(e){return null;}};
+const save=s=>{try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}};
+let state=load();
+
+/* ===================== datas ===================== */
+const MONTHS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const parseD=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);};
+const fmt=dt=>dt.getDate()+' '+MONTHS[dt.getMonth()];
+const todayMid=()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());};
+const addDays=(dt,k)=>{const d=new Date(dt);d.setDate(d.getDate()+k);return d;};
+const isoToday=()=>{const t=todayMid();return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;};
+function dayIndex(st){const start=parseD(st.start);const diff=Math.floor((todayMid()-start)/86400000);const len=st.cycle;return ((diff%len)+len)%len;}
+
+const ic=(id,cls)=>`<svg${cls?` class="${cls}"`:''}><use href="#${id}"/></svg>`;
+
+/* ===================== render ===================== */
+const app=document.getElementById('app');
+let selIdx=null;
+
+function render(){
+  if(!state||!state.start){renderSetup();return;}
+  if(!state.cycle)state.cycle=28;
+  renderMain();
+}
+
+function renderSetup(){
+  app.innerHTML=`
+   <div class="setup">
+     <div class="hero">
+       <div class="ring">${ic('i-flower')}</div>
+       <h2>Acompanhe seu humor<br>ao longo do ciclo</h2>
+       <p>Informe o primeiro dia da sua última menstruação. A partir disso, calculamos seu humor estimado e as melhores fases para decisões.</p>
+     </div>
+     <div class="group">
+       <div class="grow"><label>Início da menstruação</label><input type="date" id="startInput"></div>
+     </div>
+     <button class="btn" id="startBtn">Ver meu ciclo</button>
+   </div>`;
+  const inp=document.getElementById('startInput');
+  inp.value=isoToday(); inp.max=isoToday();
+  document.getElementById('startBtn').onclick=()=>{if(!inp.value)return;state={start:inp.value,cycle:28,tdah:false,medMg:0};save(state);render();};
+}
+
+function renderMain(){
+  const len=state.cycle, tdah=!!state.tdah, mg=tdah?(state.medMg||0):0;
+  const curve=moodCurve(len), focus=applyMed(focusCurve(len),len,mg);
+  const today=dayIndex(state);
+  const idx=(selIdx==null)?today:selIdx;
+  const isPreview=selIdx!=null&&selIdx!==today;
+  const v=curve[idx], fv=focus[idx], pct=toPct(v), fpct=toPct(fv);
+  const ph=phaseFor(idx,len);
+  const dec=tdah?decisionForTdah(v,fv,idx,len):decisionFor(v);
+
+  const start=parseD(state.start);
+  const diffDays=Math.floor((todayMid()-start)/86400000);
+  const curCycleStart=addDays(start,Math.floor(diffDays/len)*len);
+  const dateForIdx=addDays(curCycleStart,idx);
+
+  const lutealWeak=tdah&&mg>0&&medPhaseFactor(idx,len)<1;
+
+  const focusBlock=tdah?`
+    <div class="card pad focus">
+      <div class="score" style="gap:14px">
+        <div class="ic-badge" style="background:color-mix(in srgb, var(--blue) 16%, transparent);color:var(--blue)">${ic('i-'+focusIcon(fv).slice(2))}</div>
+        <div class="body">
+          <div class="fhead"><span class="eyebrow">Foco / função executiva${mg>0?' · '+mg+' mg':''}</span></div>
+          <div class="fhead"><span class="fnum">${fpct}<span class="u">%</span></span></div>
+          <div class="barwrap"><div class="barfill" style="width:${fpct}%;background:${fv>=0?'var(--blue)':'var(--red)'}"></div></div>
+          <div class="meta">${focusWord(fv)}</div>
+        </div>
+      </div>
+    </div>`:'';
+
+  const medNote=lutealWeak?`
+    <div class="mednote">${ic('i-warn')}<p>Nesta fase (lútea/pré-menstrual), a resposta ao Venvanse tende a ser <b>menor</b>. Alguns médicos ajustam a dose nesta semana — converse com o seu antes de mudar.</p></div>`:'';
+
+  app.innerHTML=`
+   <header>
+     <div class="htxt">
+       <h1>Meu Ciclo</h1>
+       <span class="sub">Dia ${idx+1} de ${len}${tdah?' · TDAH'+(mg>0?' · '+mg+' mg':''):''}</span>
+     </div>
+     ${isPreview?'':`<button class="gearbtn" id="gearBtn">${ic('i-gear')}</button>`}
+   </header>
+
+   <main>
+     <div class="card pad">
+       <div class="score">
+         <div class="ic-badge" style="background:color-mix(in srgb, ${moodColor(v)} 16%, transparent);color:${moodColor(v)}">${ic(moodIcon(v))}</div>
+         <div class="body">
+           <div class="eyebrow">${isPreview?'Previsão · '+fmt(dateForIdx):'Humor de hoje'}</div>
+           <div class="bignum">${pct}<span class="u">%</span></div>
+           <div class="meta">${ic(ph.icon)}${moodWord(v)} · ${ph.name}</div>
+         </div>
+         ${isPreview?`<button class="today-btn" id="todayBtn">Hoje</button>`:''}
+       </div>
+     </div>
+
+     ${focusBlock}
+
+     <div class="card pad decision">
+       <div class="dico" style="background:${dec.color}">${ic(dec.icon)}</div>
+       <div class="body"><div class="t">${dec.t}</div><div class="s">${dec.s}</div></div>
+     </div>
+
+     ${medNote}
+
+     <div class="card chartcard">
+       <div class="chead"><span class="ct">${tdah?'Humor e foco':'Humor no ciclo'}</span><span class="hint">${ic('i-tap')}toque um dia</span></div>
+       <div class="chartwrap"><svg class="chart" id="chart" preserveAspectRatio="xMidYMid meet"></svg></div>
+       ${tdah?`<div class="clegend"><span><i style="background:var(--pink)"></i>Humor</span><span><i style="background:var(--blue)"></i>Foco</span></div>`:''}
+     </div>
+
+     <div class="footer" id="footer"></div>
+   </main>`;
+
+  const nextPeriod=addDays(start,Math.ceil((diffDays+1)/len)*len);
+  const ovuIdx=Math.round(OVU_BASE/27*(len-1));
+  let nextOvu=addDays(start,ovuIdx); while(nextOvu<todayMid())nextOvu=addDays(nextOvu,len);
+  document.getElementById('footer').innerHTML=
+    `<span>${ic('i-drop')}Ovulação <b>${fmt(nextOvu)}</b></span><span>${ic('i-drop')}Menstruação <b>${fmt(nextPeriod)}</b></span>`;
+
+  const g1=document.getElementById('gearBtn');
+  if(g1)g1.onclick=openSheet;
+  const tb=document.getElementById('todayBtn'); if(tb)tb.onclick=()=>{selIdx=null;renderMain();};
+  drawChart(curve,today,len,idx,tdah?focus:null);
+}
+
+/* ===================== gráfico ===================== */
+function drawChart(curve,today,len,sel,focus){
+  const svg=document.getElementById('chart'),NS='http://www.w3.org/2000/svg';
+  while(svg.firstChild)svg.removeChild(svg.firstChild);
+  const W=320,rowH=22,topPad=10,botPad=10,H=topPad+botPad+rowH*(len-1);
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const sidePad=14,xL=sidePad,xR=W-sidePad,cx=(xL+xR)/2,half=(xR-xL)/2,y0=topPad,y1=H-botPad;
+  const py=i=>y0+(y1-y0)*(i/(len-1)), bx=val=>cx+half*(val/100);
+  const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  const sepCol=getComputedStyle(document.body).getPropertyValue('--label3')||'rgba(0,0,0,0.2)';
+
+  svg.appendChild(el('line',{x1:cx,x2:cx,y1:y0-2,y2:y1+2,stroke:sepCol,'stroke-width':1}));
+  if(sel!==today)svg.appendChild(el('rect',{x:4,y:py(sel)-rowH*0.5,width:W-8,height:rowH,rx:7,fill:'color-mix(in srgb, var(--blue) 12%, transparent)'}));
+
+  curve.forEach((val,i)=>{
+    const y=py(i),x=bx(val),good=val>=0,xx=Math.min(cx,x),w=Math.abs(x-cx),hl=(i===sel);
+    svg.appendChild(el('rect',{x:xx,y:y-rowH*0.28,width:Math.max(w,1),height:rowH*0.56,rx:rowH*0.28,
+      fill:good?'var(--green)':'var(--red)',opacity:hl?1:0.34}));
+    const hit=el('rect',{x:0,y:y-rowH*0.5,width:W,height:rowH,fill:'transparent',style:'cursor:pointer'});
+    hit.addEventListener('click',()=>{selIdx=i;renderMain();});
+    svg.appendChild(hit);
+  });
+
+  if(focus){
+    let d=''; focus.forEach((val,i)=>{d+=(i===0?'M':'L')+bx(val)+' '+py(i)+' ';});
+    svg.appendChild(el('path',{d,fill:'none',stroke:'var(--blue)','stroke-width':2.2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+    focus.forEach((val,i)=>svg.appendChild(el('circle',{cx:bx(val),cy:py(i),r:i===sel?2.8:1.5,fill:'var(--blue)'})));
+  }
+
+  const yT=py(today);
+  svg.appendChild(el('line',{x1:6,x2:W-6,y1:yT,y2:yT,stroke:'var(--label2)','stroke-width':1,'stroke-dasharray':'2 3',opacity:0.6}));
+  svg.appendChild(el('circle',{cx:bx(curve[today]),cy:yT,r:3.4,fill:'var(--label)'}));
+  if(sel!==today)svg.appendChild(el('circle',{cx:bx(curve[sel]),cy:py(sel),r:5,fill:'none',stroke:'var(--blue)','stroke-width':2.2}));
+}
+
+/* ===================== sheet ===================== */
+const sheet=document.getElementById('sheet');
+let tmpTdah=false,tmpMg=0;
+function paintDoses(){document.querySelectorAll('#doses .dose').forEach(b=>b.classList.toggle('sel',+b.dataset.mg===tmpMg));}
+function paintTdah(){document.getElementById('tdahToggle').setAttribute('aria-checked',tmpTdah?'true':'false');document.getElementById('medSection').style.display=tmpTdah?'block':'none';}
+function openSheet(){
+  document.getElementById('cfgDate').value=state.start;
+  document.getElementById('cfgDate').max=isoToday();
+  document.getElementById('cycVal').textContent=state.cycle;
+  tmpTdah=!!state.tdah; tmpMg=state.medMg||0; paintTdah(); paintDoses();
+  sheet.classList.add('open');
+}
+const closeSheet=()=>sheet.classList.remove('open');
+sheet.addEventListener('click',e=>{if(e.target===sheet)closeSheet();});
+document.getElementById('tdahToggle').onclick=()=>{tmpTdah=!tmpTdah;if(!tmpTdah)tmpMg=0;paintTdah();paintDoses();};
+document.getElementById('doses').addEventListener('click',e=>{const b=e.target.closest('.dose');if(!b)return;tmpMg=+b.dataset.mg;paintDoses();});
+document.getElementById('cycMinus').onclick=()=>{let n=+document.getElementById('cycVal').textContent;document.getElementById('cycVal').textContent=Math.max(21,n-1);};
+document.getElementById('cycPlus').onclick=()=>{let n=+document.getElementById('cycVal').textContent;document.getElementById('cycVal').textContent=Math.min(35,n+1);};
+document.getElementById('cfgSave').onclick=()=>{
+  const d=document.getElementById('cfgDate').value,c=+document.getElementById('cycVal').textContent;
+  if(d)state.start=d; state.cycle=c; state.tdah=tmpTdah; state.medMg=tmpTdah?tmpMg:0;
+  selIdx=null; save(state); closeSheet(); render();
+};
+document.getElementById('cfgReset').onclick=()=>{try{localStorage.removeItem(KEY);}catch(e){}state=null;selIdx=null;closeSheet();render();};
+
+render();
+window.addEventListener('resize',()=>{if(state&&state.start)render();});
+</script>
+</body>
+</html>
