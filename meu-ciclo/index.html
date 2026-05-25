@@ -12,7 +12,6 @@
 <style>
   :root{
     --sf:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",sans-serif;
-    /* iOS system colors (light) */
     --bg:#f2f2f7;
     --bg-elev:#ffffff;
     --sep:rgba(60,60,67,0.12);
@@ -26,6 +25,7 @@
     --teal:#5ac8fa;
     --pink:#ff2d92;
     --yellow:#ffcc00;
+    --purple:#af52de;
     --fill:rgba(120,120,128,0.12);
     --fill2:rgba(120,120,128,0.2);
   }
@@ -56,41 +56,83 @@
   }
   .app{display:flex;flex-direction:column;height:100%;gap:11px;}
 
-  /* ---- large-title header (iOS) ---- */
-  header{flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;padding:4px 2px 0;}
-  header .htxt{display:flex;flex-direction:column;}
+  header{flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;padding:4px 2px 0;gap:8px;}
+  header .htxt{display:flex;flex-direction:column;min-width:0;flex:1;}
   header h1{font-size:30px;font-weight:700;letter-spacing:0.37px;line-height:1.1;}
-  header .sub{font-size:13px;color:var(--label2);margin-top:2px;font-weight:400;}
-  .gearbtn{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--sep);
+  header .sub{font-size:13px;color:var(--label2);margin-top:2px;font-weight:400;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  header .sub .calib{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;
+    color:var(--purple);background:color-mix(in srgb, var(--purple) 13%, transparent);
+    padding:2px 7px;border-radius:7px;}
+  header .sub .calib svg{width:10px;height:10px;}
+  .headBtns{display:flex;gap:8px;flex:0 0 auto;}
+  .iconbtn{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--sep);
     background:var(--bg-elev);color:var(--blue);
-    display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
     box-shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 12px rgba(0,0,0,0.06);
     -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
     transition:transform .35s cubic-bezier(.3,1.3,.4,1),background .15s,box-shadow .15s;}
-  .gearbtn svg{width:20px;height:20px;transition:transform .4s cubic-bezier(.3,1.3,.4,1);}
-  .gearbtn:active{transform:scale(0.9);background:var(--fill);box-shadow:0 1px 2px rgba(0,0,0,0.1);}
-  .gearbtn:active svg{transform:rotate(50deg);}
-
-  .pill{font-size:11px;font-weight:600;color:var(--blue);background:var(--fill);
-    border-radius:6px;padding:2px 7px;letter-spacing:0;display:inline-flex;align-items:center;gap:4px;width:fit-content;margin-top:5px;}
-  .pill svg{width:11px;height:11px;}
+  .iconbtn svg{width:20px;height:20px;transition:transform .4s cubic-bezier(.3,1.3,.4,1);}
+  .iconbtn:active{transform:scale(0.9);background:var(--fill);box-shadow:0 1px 2px rgba(0,0,0,0.1);}
+  .iconbtn.gear:active svg{transform:rotate(50deg);}
 
   main{flex:1;display:flex;flex-direction:column;gap:11px;min-height:0;}
 
-  /* ---- iOS grouped card ---- */
   .card{background:var(--bg-elev);border-radius:18px;flex:0 0 auto;}
   .card.pad{padding:15px 16px;}
 
-  /* score row */
   .score{display:flex;align-items:center;gap:14px;position:relative;}
   .ic-badge{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
   .ic-badge svg{width:26px;height:26px;}
   .score .body{flex:1;min-width:0;}
-  .eyebrow{font-size:12px;font-weight:600;color:var(--label2);letter-spacing:0.2px;text-transform:none;}
+  .eyebrow{font-size:12px;font-weight:600;color:var(--label2);letter-spacing:0.2px;}
   .bignum{font-size:33px;font-weight:700;line-height:1.05;letter-spacing:0.3px;margin:1px 0;}
   .bignum .u{font-size:17px;font-weight:600;color:var(--label2);}
   .meta{font-size:13px;color:var(--label2);display:flex;align-items:center;gap:5px;}
   .meta svg{width:13px;height:13px;}
+
+  /* Mood inline logger */
+  .logRow{
+    margin-top:13px;padding-top:13px;border-top:0.5px solid var(--sep);
+    display:flex;align-items:center;gap:8px;
+  }
+  .logRow .lbl{font-size:12px;color:var(--label2);flex:0 0 auto;}
+  .logRow .emojis{display:flex;gap:3px;flex:1;justify-content:space-between;}
+  .moodbtn{
+    width:38px;height:38px;border-radius:50%;border:none;
+    background:var(--fill);cursor:pointer;font-size:21px;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .2s cubic-bezier(.3,1.4,.5,1),background .15s;
+    padding:0;
+  }
+  .moodbtn:active{transform:scale(.85);}
+  .moodbtn.sel{background:var(--blue);transform:scale(1.08);box-shadow:0 2px 8px color-mix(in srgb,var(--blue) 50%,transparent);}
+  .loggedRow{
+    margin-top:13px;padding-top:13px;border-top:0.5px solid var(--sep);
+    display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--label2);
+  }
+  .loggedRow .v{font-size:20px;line-height:1;}
+  .loggedRow .ch{margin-left:auto;border:none;background:var(--fill);color:var(--blue);
+    font-family:var(--sf);font-size:12px;font-weight:600;padding:5px 10px;border-radius:8px;cursor:pointer;}
+  .loggedRow .ch:active{background:var(--fill2);}
+
+  /* Period chip row */
+  .periodRow{
+    margin-top:9px;padding-top:9px;border-top:0.5px solid var(--sep);
+    display:flex;justify-content:center;
+  }
+  .periodChip{
+    border:none;cursor:pointer;
+    background:color-mix(in srgb, var(--pink) 13%, transparent);
+    color:var(--pink);font-family:var(--sf);
+    font-size:12.5px;font-weight:600;
+    padding:7px 13px;border-radius:11px;
+    display:inline-flex;align-items:center;gap:5px;
+    transition:background .15s,transform .15s;
+  }
+  .periodChip:active{background:color-mix(in srgb, var(--pink) 22%, transparent);transform:scale(.97);}
+  .periodChip.confirm{background:var(--pink);color:#fff;animation:pulse 1.5s ease-in-out infinite;}
+  .periodChip svg{width:13px;height:13px;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
 
   /* focus row */
   .focus .body{flex:1;min-width:0;}
@@ -100,7 +142,6 @@
   .fhead .fnum{font-size:22px;font-weight:700;letter-spacing:0.3px;}
   .fhead .fnum .u{font-size:13px;font-weight:600;color:var(--label2);}
 
-  /* decision row */
   .decision{display:flex;align-items:center;gap:13px;}
   .decision .dico{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
   .decision .dico svg{width:17px;height:17px;color:#fff;}
@@ -108,7 +149,6 @@
   .decision .t{font-size:15px;font-weight:600;line-height:1.25;}
   .decision .s{font-size:12.5px;color:var(--label2);line-height:1.35;margin-top:2px;}
 
-  /* med note */
   .mednote{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;
     background:color-mix(in srgb, var(--orange) 12%, var(--bg-elev));
     border-radius:14px;flex:0 0 auto;}
@@ -116,7 +156,17 @@
   .mednote p{font-size:12px;line-height:1.4;color:var(--label);}
   .mednote b{font-weight:600;}
 
-  /* chart card */
+  /* Learning tip (first-time) */
+  .learnTip{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;
+    background:color-mix(in srgb, var(--purple) 11%, var(--bg-elev));
+    border-radius:14px;flex:0 0 auto;}
+  .learnTip .ic{width:17px;height:17px;color:var(--purple);flex:0 0 auto;margin-top:1px;}
+  .learnTip p{font-size:12px;line-height:1.4;color:var(--label);flex:1;}
+  .learnTip b{font-weight:600;}
+  .learnTip .x{background:none;border:none;color:var(--label3);cursor:pointer;
+    padding:0;width:18px;height:18px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;}
+  .learnTip .x svg{width:14px;height:14px;}
+
   .chartcard{flex:1;min-height:0;display:flex;flex-direction:column;padding:12px 12px 6px;}
   .chead{display:flex;justify-content:space-between;align-items:center;padding:0 4px 4px;}
   .chead .ct{font-size:13px;font-weight:600;color:var(--label2);}
@@ -137,7 +187,7 @@
     font-family:var(--sf);font-size:13px;font-weight:600;padding:6px 13px;border-radius:18px;cursor:pointer;}
   .today-btn:active{opacity:0.6;}
 
-  /* ---------- setup ---------- */
+  /* setup */
   .setup{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:0 6px;}
   .setup .hero{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;margin-bottom:6px;}
   .setup .hero .ring{width:64px;height:64px;border-radius:50%;background:var(--fill);display:flex;align-items:center;justify-content:center;}
@@ -154,7 +204,7 @@
     padding:15px;color:#fff;background:var(--blue);cursor:pointer;width:100%;}
   .btn:active{opacity:0.8;}
 
-  /* ---------- settings sheet ---------- */
+  /* sheets (settings + report) */
   .sheet{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,0.4);display:none;align-items:flex-end;}
   .sheet.open{display:flex;animation:fade .25s ease;}
   @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -163,8 +213,10 @@
     animation:slide .32s cubic-bezier(.2,.8,.2,1);}
   @keyframes slide{from{transform:translateY(100%)}to{transform:translateY(0)}}
   .grabber{width:36px;height:5px;border-radius:3px;background:var(--label3);margin:8px auto 14px;}
-  .sheet h3{font-size:22px;font-weight:700;margin-bottom:14px;letter-spacing:0.3px;}
-  .seclabel{font-size:13px;color:var(--label2);font-weight:400;padding:0 4px 7px;margin-top:18px;}
+  .sheet h3{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:0.3px;}
+  .sheet h3 + .sub3{font-size:13px;color:var(--label2);margin-bottom:14px;}
+  .seclabel{font-size:13px;color:var(--label2);font-weight:400;padding:0 4px 7px;margin-top:18px;display:flex;align-items:center;gap:6px;}
+  .seclabel svg{width:13px;height:13px;}
   .glist{background:var(--bg-elev);border-radius:12px;overflow:hidden;}
   .gitem{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;min-height:48px;}
   .gitem + .gitem{border-top:1px solid var(--sep);}
@@ -176,7 +228,6 @@
   .stepper .sv{min-width:54px;text-align:center;font-size:15px;font-weight:600;}
   .stepper .sv small{font-weight:400;color:var(--label2);font-size:11px;}
 
-  /* iOS switch */
   .switch{width:51px;height:31px;border-radius:16px;border:none;background:var(--fill2);position:relative;cursor:pointer;transition:background .25s;flex:0 0 auto;}
   .switch .knob{position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;
     box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:left .25s cubic-bezier(.3,1.4,.5,1);}
@@ -194,6 +245,44 @@
   .btn-ghost{border:none;border-radius:14px;background:var(--bg-elev);color:var(--red);
     font-family:var(--sf);font-size:17px;font-weight:400;padding:15px;cursor:pointer;}
   .disclaimer{font-size:11px;line-height:1.45;color:var(--label2);text-align:center;margin-top:16px;padding:0 8px;}
+
+  /* Report sheet content */
+  .repHead{display:flex;align-items:center;gap:12px;background:var(--bg-elev);border-radius:14px;padding:13px 14px;}
+  .repHead .ic{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .repHead .ic svg{width:23px;height:23px;}
+  .repHead .body{flex:1;min-width:0;}
+  .repHead .t{font-size:17px;font-weight:600;line-height:1.2;}
+  .repHead .s{font-size:12.5px;color:var(--label2);margin-top:2px;}
+
+  .repSummary{background:color-mix(in srgb, var(--blue) 9%, var(--bg-elev));border-radius:14px;padding:13px 15px;margin-top:12px;}
+  .repSummary .lbl{font-size:11px;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:0.4px;}
+  .repSummary p{font-size:13.5px;line-height:1.5;margin-top:5px;}
+
+  .repList{background:var(--bg-elev);border-radius:12px;overflow:hidden;}
+  .repLi{padding:11px 14px;font-size:13.5px;line-height:1.4;display:flex;gap:10px;align-items:flex-start;color:var(--label);}
+  .repLi + .repLi{border-top:0.5px solid var(--sep);}
+  .repLi .dot{flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:var(--blue);margin-top:7px;}
+  .repLi.do .dot{background:var(--green);}
+  .repLi.avoid .dot{background:var(--orange);}
+  .repCard{background:var(--bg-elev);border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.5;color:var(--label);}
+  .repCard b{font-weight:600;}
+  .repCard.tdah{background:color-mix(in srgb, var(--purple) 10%, var(--bg-elev));}
+  .repCard.tdah .lbl{font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:5px;}
+
+  .repDisc{font-size:11px;line-height:1.45;color:var(--label2);text-align:center;margin-top:20px;padding:0 8px;}
+
+  /* Toast */
+  .toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 30px);
+    transform:translateX(-50%) translateY(20px);
+    background:var(--label);color:var(--bg);
+    padding:11px 16px;border-radius:14px;
+    font-size:13px;font-weight:500;line-height:1.35;
+    box-shadow:0 8px 24px rgba(0,0,0,0.3);
+    opacity:0;pointer-events:none;
+    transition:opacity .25s,transform .25s cubic-bezier(.3,1.3,.5,1);
+    z-index:40;max-width:84vw;text-align:center;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast .em{margin-right:5px;}
 </style>
 </head>
 <body>
@@ -212,7 +301,7 @@
         <input type="date" id="cfgDate">
       </div>
       <div class="gitem">
-        <span class="gl">Duração do ciclo</span>
+        <span class="gl">Duração do ciclo<small>Calibrado automaticamente com seus registros</small></span>
         <div class="stepper">
           <button id="cycMinus">−</button>
           <div class="sv"><span id="cycVal">28</span><br><small>dias</small></div>
@@ -245,17 +334,39 @@
       </div>
     </div>
 
+    <div class="seclabel">Seus dados</div>
+    <div class="glist">
+      <div class="gitem">
+        <span class="gl">Registros<small id="statsLine">Nenhum registro ainda</small></span>
+      </div>
+    </div>
+
     <div class="btn-row">
       <button class="btn" id="cfgSave">Salvar</button>
       <button class="btn-ghost" id="cfgReset">Recomeçar do zero</button>
     </div>
-    <p class="disclaimer">Estimativas educativas baseadas em pesquisa preliminar. Variam muito de pessoa para pessoa e não substituem avaliação médica. Nunca ajuste medicação por conta própria.</p>
+    <p class="disclaimer">Estimativas educativas baseadas em pesquisa preliminar e em seus próprios registros. Variam muito de pessoa para pessoa e não substituem avaliação médica. Nunca ajuste medicação por conta própria.</p>
   </div>
 </div>
+
+<!-- report sheet -->
+<div class="sheet" id="repSheet">
+  <div class="sheet-inner">
+    <div class="grabber"></div>
+    <h3>Relatório do dia</h3>
+    <div class="sub3" id="repSub"></div>
+    <div id="repBody"></div>
+    <p class="repDisc">Sugestões gerais baseadas na fase atual do seu ciclo. Adapte ao seu corpo e bom senso. Não substitui orientação médica.</p>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <!-- SVG icon defs -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <symbol id="i-gear" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M10.6 2.8h2.8l.5 2.4a6.6 6.6 0 0 1 1.9 1.1l2.3-.8 1.4 2.4-1.8 1.6a6.6 6.6 0 0 1 0 2.2l1.8 1.6-1.4 2.4-2.3-.8a6.6 6.6 0 0 1-1.9 1.1l-.5 2.4h-2.8l-.5-2.4a6.6 6.6 0 0 1-1.9-1.1l-2.3.8-1.4-2.4 1.8-1.6a6.6 6.6 0 0 1 0-2.2L3.8 7.9l1.4-2.4 2.3.8a6.6 6.6 0 0 1 1.9-1.1Z"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-report" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M7 3.5h7.5L19 8v11a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5Z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M14 3.5V8h5"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M9 12.5h7M9 15.5h7M9 18h4"/></symbol>
   <symbol id="i-face-great" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M8 14c.9 1.4 2.3 2.2 4 2.2s3.1-.8 4-2.2"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M8.5 9.5h.01M15.5 9.5h.01"/></symbol>
   <symbol id="i-face-good" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M8.5 14.2c.8.9 2 1.5 3.5 1.5s2.7-.6 3.5-1.5"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M8.5 9.5h.01M15.5 9.5h.01"/></symbol>
   <symbol id="i-face-neutral" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M8.5 15h7"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M8.5 9.5h.01M15.5 9.5h.01"/></symbol>
@@ -274,10 +385,17 @@
   <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></symbol>
   <symbol id="i-tap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M9 11V6.5a1.8 1.8 0 0 1 3.5 0V11m0-1.5a1.7 1.7 0 0 1 3.4 0V12m0-1a1.7 1.7 0 0 1 3.4 0v3.5a5 5 0 0 1-5 5h-1.6a4 4 0 0 1-3-1.4l-3-3.4a1.7 1.7 0 0 1 2.5-2.3L9 14"/></symbol>
   <symbol id="i-flower" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 9.6c-1-2.6-1-4.4 0-5.6 1 1.2 1 3 0 5.6Zm0 4.8c1 2.6 1 4.4 0 5.6-1-1.2-1-3 0-5.6Zm-2.4-2.4c-2.6-1-4.4-1-5.6 0 1.2 1 3 1 5.6 0Zm4.8 0c2.6-1 4.4-1 5.6 0-1.2 1-3 1-5.6 0Z"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M12 3.5l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z M18 14l.9 2.4L21.2 17l-2.3.6L18 20l-.9-2.4L14.8 17l2.3-.6z M6 14.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8L3.5 17l1.8-.7z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-body" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M7 11l5-2.5L17 11M12 8.5v6m-3 6 3-5.5 3 5.5"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M9 4.5a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 4 9.5v3A2.5 2.5 0 0 0 6.5 15a2 2 0 0 0 2 2.5 2 2 0 0 0 2-1V6.5a2 2 0 0 0-1.5-2ZM15 4.5a2.5 2.5 0 0 1 2.5 2.5A2.5 2.5 0 0 1 20 9.5v3A2.5 2.5 0 0 1 17.5 15a2 2 0 0 1-2 2.5 2 2 0 0 1-2-1V6.5a2 2 0 0 1 1.5-2Z"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3 18V8m0 5h18v5M21 13v-1.5a3 3 0 0 0-3-3h-6V13"/><circle cx="7" cy="11" r="1.7" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
 </defs></svg>
 
 <script>
-/* ===================== modelos ===================== */
+/* ===================== modelos populacionais ===================== */
 const BASE=[-70,-75,-60,-40,-15,10,25,40,55,70,80,88,90,85,70,55,40,25,10,-5,-20,-35,-50,-60,-70,-78,-82,-85];
 const FOCUS_BASE=[-55,-62,-55,-40,-20,5,25,45,62,76,84,80,55,72,80,70,55,38,18,-2,-22,-40,-55,-66,-72,-70,-64,-58];
 const PERIOD_DAYS=5, OVU_BASE=13;
@@ -286,7 +404,6 @@ function resample(arr,len){const o=[];for(let i=0;i<len;i++){const t=i/(len-1)*(
 const moodCurve=len=>resample(BASE,len);
 const focusCurve=len=>resample(FOCUS_BASE,len);
 
-const MED_DOSES=[0,20,30,40,50,60,70];
 function medGain(mg){if(!mg||mg<=0)return 0;return 46*(1-Math.exp(-mg/38));}
 function medPhaseFactor(idx,len){const ovu=Math.round(OVU_BASE/27*(len-1));if(idx>=len-6)return 0.6;if(idx>ovu+1)return 0.8;return 1;}
 function applyMed(focus,len,mg){if(!mg)return focus.slice();const g=medGain(mg);return focus.map((v,i)=>Math.min(100,Math.round(v+g*medPhaseFactor(i,len))));}
@@ -297,12 +414,27 @@ function moodWord(v){if(v>=60)return'Ótima';if(v>=25)return'Boa';if(v>-15)retur
 function moodColor(v){return v>=25?'var(--green)':v>-15?'var(--yellow)':v>-55?'var(--orange)':'var(--red)';}
 function focusIcon(v){return v>=25?'i-target':v>-15?'i-wave':'i-battery-low';}
 function focusWord(v){if(v>=60)return'Foco alto';if(v>=25)return'Foco bom';if(v>-15)return'Foco médio';if(v>-55)return'Foco baixo';return'Foco muito baixo';}
-function phaseFor(idx,len){const ovu=Math.round(OVU_BASE/27*(len-1));
-  if(idx<PERIOD_DAYS)return{name:'Menstruação',icon:'i-drop'};
-  if(idx<ovu-1)return{name:'Fase folicular',icon:'i-flower'};
-  if(idx<=ovu+1)return{name:'Ovulação',icon:'i-drop'};
-  if(idx<len-5)return{name:'Fase lútea',icon:'i-moon'};
-  return{name:'Pré-menstrual (TPM)',icon:'i-moon'};}
+
+function phaseKey(idx,len){
+  const ovu=Math.round(OVU_BASE/27*(len-1));
+  if(idx<PERIOD_DAYS)return'menstruation';
+  if(idx<ovu-1)return'follicular';
+  if(idx<=ovu+1)return'ovulation';
+  if(idx<len-5)return'luteal';
+  return'premen';
+}
+function phaseFor(idx,len){
+  const k=phaseKey(idx,len);
+  return PHASES[k];
+}
+
+const PHASES={
+  menstruation:{name:'Menstruação',icon:'i-drop',color:'var(--red)'},
+  follicular:{name:'Fase folicular',icon:'i-flower',color:'var(--green)'},
+  ovulation:{name:'Ovulação',icon:'i-drop',color:'var(--pink)'},
+  luteal:{name:'Fase lútea',icon:'i-moon',color:'var(--orange)'},
+  premen:{name:'Pré-menstrual (TPM)',icon:'i-moon',color:'var(--purple)'},
+};
 
 function decisionFor(v){
   if(v>=55)return{color:'var(--green)',icon:'i-check',t:'Ótimo momento para decidir',s:'Humor e clareza no auge — bom para escolhas importantes.'};
@@ -321,11 +453,105 @@ function decisionForTdah(mood,focus,idx,len){
   return{color:'var(--red)',icon:'i-stop',t:'Evite decidir agora',s:'Foco e regulação baixos — deixe escolhas grandes para depois.'};
 }
 
+/* ===================== conteúdo do relatório por fase ===================== */
+const REPORT={
+  menstruation:{
+    summary:'Estrogênio e progesterona no chão. Energia física baixa, mas a mente fica clara e introspectiva — bom momento para reflexão e planejamento.',
+    do:[
+      'Movimento gentil: caminhada, yoga, alongamento — libera endorfina sem desgastar.',
+      'Coma ferro (lentilha, espinafre, carne vermelha) e magnésio (chocolate amargo, sementes).',
+      'Tarefas solo de pensamento profundo: escrita, planejamento, revisão.',
+      'Priorize 8–9 h de sono e calor no abdômen para cólicas.',
+    ],
+    avoid:[
+      'Treinos pesados e HIIT — seu corpo já está gastando muita energia.',
+      'Conversas difíceis ou confrontos que podem esperar.',
+      'Cafeína em excesso (piora cólicas e ansiedade).',
+    ],
+    work:'Ótima janela para organizar a próxima semana e fazer "limpeza" de e-mails e listas. Trabalho individual, não colaborativo.',
+    decide:'Adie escolhas grandes. Use a clareza interior para listar opções — decida na fase folicular.',
+    tdah:'Estrogênio baixo → dopamina baixa. A medicação pode parecer menos efetiva. Reduza a expectativa, divida tarefas em micro-passos, e seja gentil consigo.',
+  },
+  follicular:{
+    summary:'Estrogênio em alta. Energia, criatividade e abertura ao novo no auge. É a janela do mês para começar coisas.',
+    do:[
+      'Treinos intensos, esportes coletivos, força — seu corpo aguenta mais.',
+      'Comece projetos novos, aprenda algo difícil, experimente formatos.',
+      'Brainstorm em grupo, networking, conversas exploratórias.',
+      'Cardápio rico em proteínas e vegetais frescos.',
+    ],
+    avoid:[
+      'Sobrecarregar a agenda — guarde energia para o pico da ovulação.',
+      'Procrastinar tarefas que pedem foco criativo (é agora ou nunca neste ciclo).',
+    ],
+    work:'Marque pitches, entrevistas, kickoff de projetos. Sua mente conecta ideias com facilidade.',
+    decide:'Boa fase para decidir, especialmente coisas que envolvem mudança ou risco calculado.',
+    tdah:'Sua melhor janela do mês: medicação responde bem, dopamina mais disponível. Use para os projetos difíceis que você vem evitando.',
+  },
+  ovulation:{
+    summary:'Testosterona e estrogênio no pico. Confiança, libido, comunicação verbal e carisma no máximo. Cuidado com impulsividade.',
+    do:[
+      'Apresentações, pitches, negociações importantes — sua presença está em alta.',
+      'Eventos sociais, datas, primeira impressão importa.',
+      'HIIT, esportes de explosão, dança.',
+      'Hidratação reforçada (corpo libera mais energia).',
+    ],
+    avoid:[
+      'Compras impulsivas ou decisões "no calor do momento".',
+      'Comprometimentos de longo prazo sem dormir sobre o assunto.',
+      'Conflitos verbais — você está mais assertiva e pode ferir sem perceber.',
+    ],
+    work:'Sua melhor versão pública. Use para o que precisa de presença e influência. Mas anote ideias antes de assinar.',
+    decide:'Sim para decisões já maduradas. Para decisões novas, espere 24 h antes de finalizar.',
+    tdah:'Foco máximo + impulsividade. Pense duas vezes antes de comprar, dizer sim, ou trocar de plano. Excelente para tarefas que pedem brilho.',
+  },
+  luteal:{
+    summary:'Progesterona sobe, energia desce gradualmente. Foco vira execução e detalhe. Bom para terminar o que começou na folicular.',
+    do:[
+      'Trabalho de detalhe: editar, revisar, organizar, documentar.',
+      'Reuniões 1:1, mentoria, conversas profundas.',
+      'Pilates, caminhadas longas, atividades de baixo impacto.',
+      'Carbos complexos e proteína para estabilizar humor.',
+    ],
+    avoid:[
+      'Começar grandes projetos novos — você não terá energia para sustentar.',
+      'Pular refeições (queda de açúcar = irritabilidade rápida).',
+    ],
+    work:'Entregue. Sua atenção a falhas é maior — ótimo para QA, revisões e auditoria.',
+    decide:'Boa fase para decisões analíticas. Cuidado com tom: pode parecer mais crítica do que pretende.',
+    tdah:'Resposta à medicação cai 15–25 %. Externalize tudo: listas, lembretes, alarmes. Divida tarefas em pedaços pequenos.',
+  },
+  premen:{
+    summary:'Queda hormonal abrupta. Sensibilidade emocional, energia baixa, percepção crítica aguçada. Não é fraqueza — é informação amplificada.',
+    do:[
+      'Priorize sono (9 h se possível), magnésio, ômega-3.',
+      'Tarefas administrativas calmas, organização de arquivos.',
+      'Yoga restaurativo, meditação, banho quente.',
+      'Anote o que está te incomodando — vire diário, não decisão.',
+    ],
+    avoid:[
+      'Conversas difíceis adiáveis — espere o ciclo virar.',
+      'Cafeína em excesso, álcool, açúcar refinado.',
+      'Ruminação — pegue o pensamento e escreva, não revisite.',
+    ],
+    work:'Sua crítica é mais aguda agora — informação real, mas com volume amplificado. Anote o que vê, decida o que fazer depois.',
+    decide:'Pause. Anote. Decida quando o ciclo virar.',
+    tdah:'A fase mais difícil. Medicação parece "não funcionar". Reduza demandas, foque no básico, programe descanso. Isso passa.',
+  },
+};
+
 /* ===================== persistência ===================== */
 const KEY='meuCiclo.v2';
 const load=()=>{try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null;}catch(e){return null;}};
 const save=s=>{try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}};
-let state=load();
+function migrate(s){
+  if(!s)return s;
+  if(!s.periods)s.periods=s.start?[s.start]:[];
+  if(!s.moods)s.moods={};
+  if(s.dismissedLearnTip==null)s.dismissedLearnTip=false;
+  return s;
+}
+let state=migrate(load());
 
 /* ===================== datas ===================== */
 const MONTHS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
@@ -333,14 +559,81 @@ const parseD=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);
 const fmt=dt=>dt.getDate()+' '+MONTHS[dt.getMonth()];
 const todayMid=()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());};
 const addDays=(dt,k)=>{const d=new Date(dt);d.setDate(d.getDate()+k);return d;};
-const isoToday=()=>{const t=todayMid();return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;};
-function dayIndex(st){const start=parseD(st.start);const diff=Math.floor((todayMid()-start)/86400000);const len=st.cycle;return ((diff%len)+len)%len;}
+const toIso=dt=>`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+const isoToday=()=>toIso(todayMid());
 
+/* ===================== personalização ===================== */
+function uniqSortedPeriods(state){
+  const all=[...new Set([state.start,...(state.periods||[])])].filter(Boolean);
+  return all.sort();
+}
+
+function personalCycleLen(periods,fallback){
+  if(!periods||periods.length<2)return{len:fallback,n:0};
+  const diffs=[];
+  for(let i=1;i<periods.length;i++){
+    const d=(parseD(periods[i])-parseD(periods[i-1]))/86400000;
+    if(d>=18&&d<=45)diffs.push(d);
+  }
+  if(diffs.length===0)return{len:fallback,n:0};
+  let len=diffs[0];
+  for(let i=1;i<diffs.length;i++)len=0.6*diffs[i]+0.4*len;
+  return{len:Math.max(21,Math.min(40,Math.round(len))),n:diffs.length};
+}
+
+function effectiveCycle(state){
+  const periods=uniqSortedPeriods(state);
+  const pc=personalCycleLen(periods,state.cycle||28);
+  const len=pc.n>=1?pc.len:(state.cycle||28);
+  const latest=parseD(periods[periods.length-1]);
+  let cs=latest;
+  while(todayMid()-cs>=len*86400000)cs=addDays(cs,len);
+  const di=Math.floor((todayMid()-cs)/86400000);
+  return{len,nCycles:pc.n,cycleStart:cs,dayIdx:((di%len)+len)%len};
+}
+
+function personalizedMoodCurve(state,baseLen,baseCurve){
+  const periods=uniqSortedPeriods(state).map(parseD);
+  const moods=state.moods||{};
+  const buckets=Array(baseLen).fill(null).map(()=>[]);
+  for(const[date,val]of Object.entries(moods)){
+    const d=parseD(date);
+    let cs=null;
+    for(let i=periods.length-1;i>=0;i--){if(periods[i]<=d){cs=periods[i];break;}}
+    if(!cs)continue;
+    const di=Math.floor((d-cs)/86400000)%baseLen;
+    if(di<0||di>=baseLen)continue;
+    buckets[di].push((val-3)*50);
+  }
+  const K=4;
+  const curve=baseCurve.map((b,i)=>{
+    const obs=buckets[i];
+    if(obs.length===0)return b;
+    const pMean=obs.reduce((a,c)=>a+c,0)/obs.length;
+    const alpha=obs.length/(obs.length+K);
+    return Math.round(alpha*pMean+(1-alpha)*b);
+  });
+  return{curve,buckets,nMoods:Object.keys(moods).length};
+}
+
+/* ===================== helpers ===================== */
 const ic=(id,cls)=>`<svg${cls?` class="${cls}"`:''}><use href="#${id}"/></svg>`;
+const MOOD_EMOJIS=['😞','😕','😐','🙂','😄'];
+
+let toastTimer=null;
+function toast(msg,ms){
+  const t=document.getElementById('toast');
+  t.innerHTML=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),ms||2400);
+}
 
 /* ===================== render ===================== */
 const app=document.getElementById('app');
 let selIdx=null;
+let pendingPeriodConfirm=false;
+let periodConfirmTimer=null;
 
 function render(){
   if(!state||!state.start){renderSetup();return;}
@@ -354,39 +647,75 @@ function renderSetup(){
      <div class="hero">
        <div class="ring">${ic('i-flower')}</div>
        <h2>Acompanhe seu humor<br>ao longo do ciclo</h2>
-       <p>Informe o primeiro dia da sua última menstruação. A partir disso, calculamos seu humor estimado e as melhores fases para decisões.</p>
+       <p>Informe o primeiro dia da sua última menstruação. Quanto mais você anotar como se sente, mais o app aprende e personaliza suas previsões.</p>
      </div>
      <div class="group">
        <div class="grow"><label>Início da menstruação</label><input type="date" id="startInput"></div>
      </div>
-     <button class="btn" id="startBtn">Ver meu ciclo</button>
+     <button class="btn" id="startBtn">Começar</button>
    </div>`;
   const inp=document.getElementById('startInput');
   inp.value=isoToday(); inp.max=isoToday();
-  document.getElementById('startBtn').onclick=()=>{if(!inp.value)return;state={start:inp.value,cycle:28,tdah:false,medMg:0};save(state);render();};
+  document.getElementById('startBtn').onclick=()=>{
+    if(!inp.value)return;
+    state=migrate({start:inp.value,cycle:28,tdah:false,medMg:0,periods:[inp.value],moods:{}});
+    save(state);render();
+  };
 }
 
 function renderMain(){
-  const len=state.cycle, tdah=!!state.tdah, mg=tdah?(state.medMg||0):0;
-  const curve=moodCurve(len), focus=applyMed(focusCurve(len),len,mg);
-  const today=dayIndex(state);
+  const eff=effectiveCycle(state);
+  const len=eff.len;
+  const tdah=!!state.tdah, mg=tdah?(state.medMg||0):0;
+
+  const baseM=moodCurve(len);
+  const{curve:moodC,nMoods}=personalizedMoodCurve(state,len,baseM);
+  const focus=applyMed(focusCurve(len),len,mg);
+
+  const today=eff.dayIdx;
   const idx=(selIdx==null)?today:selIdx;
   const isPreview=selIdx!=null&&selIdx!==today;
-  const v=curve[idx], fv=focus[idx], pct=toPct(v), fpct=toPct(fv);
+  const v=moodC[idx], fv=focus[idx], pct=toPct(v), fpct=toPct(fv);
   const ph=phaseFor(idx,len);
   const dec=tdah?decisionForTdah(v,fv,idx,len):decisionFor(v);
 
-  const start=parseD(state.start);
-  const diffDays=Math.floor((todayMid()-start)/86400000);
-  const curCycleStart=addDays(start,Math.floor(diffDays/len)*len);
-  const dateForIdx=addDays(curCycleStart,idx);
-
+  const dateForIdx=addDays(eff.cycleStart,idx);
   const lutealWeak=tdah&&mg>0&&medPhaseFactor(idx,len)<1;
 
+  const isoTodayStr=isoToday();
+  const loggedToday=state.moods&&state.moods[isoTodayStr];
+
+  /* Header */
+  const calibBadge=eff.nCycles>=1||nMoods>=3?
+    `<span class="calib">${ic('i-sparkles')}Personalizando · ${eff.nCycles+1} ciclo${eff.nCycles+1>1?'s':''}${nMoods?` · ${nMoods} registro${nMoods>1?'s':''}`:''}</span>`:'';
+
+  /* Mood logger or confirmation (only when not preview) */
+  let logBlock='';
+  if(!isPreview){
+    if(loggedToday){
+      logBlock=`<div class="loggedRow">
+        <span class="v">${MOOD_EMOJIS[loggedToday-1]}</span>
+        <span>Você anotou hoje</span>
+        <button class="ch" id="changeMood">Alterar</button>
+      </div>`;
+    }else{
+      logBlock=`<div class="logRow">
+        <span class="lbl">Como está?</span>
+        <span class="emojis" id="moodEmojis">${MOOD_EMOJIS.map((e,i)=>`<button class="moodbtn" data-v="${i+1}" aria-label="Mood ${i+1}">${e}</button>`).join('')}</span>
+      </div>`;
+    }
+    const chipLabel=pendingPeriodConfirm?'Tocar de novo para confirmar':'Registrar período hoje';
+    const chipCls=pendingPeriodConfirm?'periodChip confirm':'periodChip';
+    logBlock+=`<div class="periodRow">
+      <button class="${chipCls}" id="periodChip">${ic('i-drop')}${chipLabel}</button>
+    </div>`;
+  }
+
+  /* Focus block */
   const focusBlock=tdah?`
     <div class="card pad focus">
       <div class="score" style="gap:14px">
-        <div class="ic-badge" style="background:color-mix(in srgb, var(--blue) 16%, transparent);color:var(--blue)">${ic('i-'+focusIcon(fv).slice(2))}</div>
+        <div class="ic-badge" style="background:color-mix(in srgb, var(--blue) 16%, transparent);color:var(--blue)">${ic(focusIcon(fv))}</div>
         <div class="body">
           <div class="fhead"><span class="eyebrow">Foco / função executiva${mg>0?' · '+mg+' mg':''}</span></div>
           <div class="fhead"><span class="fnum">${fpct}<span class="u">%</span></span></div>
@@ -399,13 +728,25 @@ function renderMain(){
   const medNote=lutealWeak?`
     <div class="mednote">${ic('i-warn')}<p>Nesta fase (lútea/pré-menstrual), a resposta ao Venvanse tende a ser <b>menor</b>. Alguns médicos ajustam a dose nesta semana — converse com o seu antes de mudar.</p></div>`:'';
 
+  const learnTip=(!state.dismissedLearnTip&&nMoods<3&&!isPreview)?`
+    <div class="learnTip">${ic('i-sparkles','ic')}
+      <p><b>Como funciona:</b> a cada vez que você anota o humor ou registra suas regras, o app aprende seu padrão e ajusta as previsões. Após 2 ciclos, a curva já reflete o seu ritmo.</p>
+      <button class="x" id="dismissTip" aria-label="Fechar">${ic('i-x')}</button>
+    </div>`:'';
+
   app.innerHTML=`
    <header>
      <div class="htxt">
        <h1>Meu Ciclo</h1>
-       <span class="sub">Dia ${idx+1} de ${len}${tdah?' · TDAH'+(mg>0?' · '+mg+' mg':''):''}</span>
+       <div class="sub">
+         <span>Dia ${idx+1} de ${len}${tdah?' · TDAH'+(mg>0?' · '+mg+' mg':''):''}</span>
+         ${calibBadge}
+       </div>
      </div>
-     ${isPreview?'':`<button class="gearbtn" id="gearBtn">${ic('i-gear')}</button>`}
+     ${isPreview?'':`<div class="headBtns">
+       <button class="iconbtn" id="reportBtn" aria-label="Relatório">${ic('i-report')}</button>
+       <button class="iconbtn gear" id="gearBtn" aria-label="Ajustes">${ic('i-gear')}</button>
+     </div>`}
    </header>
 
    <main>
@@ -419,6 +760,7 @@ function renderMain(){
          </div>
          ${isPreview?`<button class="today-btn" id="todayBtn">Hoje</button>`:''}
        </div>
+       ${logBlock}
      </div>
 
      ${focusBlock}
@@ -429,6 +771,7 @@ function renderMain(){
      </div>
 
      ${medNote}
+     ${learnTip}
 
      <div class="card chartcard">
        <div class="chead"><span class="ct">${tdah?'Humor e foco':'Humor no ciclo'}</span><span class="hint">${ic('i-tap')}toque um dia</span></div>
@@ -439,16 +782,63 @@ function renderMain(){
      <div class="footer" id="footer"></div>
    </main>`;
 
-  const nextPeriod=addDays(start,Math.ceil((diffDays+1)/len)*len);
+  /* footer */
+  const startDate=eff.cycleStart;
+  const nextPeriod=addDays(startDate,len);
   const ovuIdx=Math.round(OVU_BASE/27*(len-1));
-  let nextOvu=addDays(start,ovuIdx); while(nextOvu<todayMid())nextOvu=addDays(nextOvu,len);
+  let nextOvu=addDays(startDate,ovuIdx);
+  if(nextOvu<todayMid())nextOvu=addDays(nextOvu,len);
   document.getElementById('footer').innerHTML=
     `<span>${ic('i-drop')}Ovulação <b>${fmt(nextOvu)}</b></span><span>${ic('i-drop')}Menstruação <b>${fmt(nextPeriod)}</b></span>`;
 
-  const g1=document.getElementById('gearBtn');
-  if(g1)g1.onclick=openSheet;
+  /* event handlers */
+  const gb=document.getElementById('gearBtn'); if(gb)gb.onclick=openSettings;
+  const rb=document.getElementById('reportBtn'); if(rb)rb.onclick=()=>openReport(idx,len,tdah,mg);
   const tb=document.getElementById('todayBtn'); if(tb)tb.onclick=()=>{selIdx=null;renderMain();};
-  drawChart(curve,today,len,idx,tdah?focus:null);
+  const dt=document.getElementById('dismissTip'); if(dt)dt.onclick=()=>{state.dismissedLearnTip=true;save(state);renderMain();};
+  const cm=document.getElementById('changeMood'); if(cm)cm.onclick=()=>{delete state.moods[isoTodayStr];save(state);renderMain();};
+
+  const me=document.getElementById('moodEmojis');
+  if(me)me.addEventListener('click',e=>{
+    const b=e.target.closest('.moodbtn');if(!b)return;
+    const val=+b.dataset.v;
+    state.moods=state.moods||{};
+    state.moods[isoTodayStr]=val;
+    save(state);
+    const firstTime=Object.keys(state.moods).length===1;
+    renderMain();
+    toast(firstTime
+      ?`<span class="em">✨</span>Anotado. Suas próximas previsões ficam mais suas a cada registro.`
+      :`<span class="em">${MOOD_EMOJIS[val-1]}</span>Anotado.`);
+  });
+
+  const pc=document.getElementById('periodChip');
+  if(pc)pc.onclick=()=>handlePeriodChip(isoTodayStr);
+
+  drawChart(moodC,today,len,idx,tdah?focus:null);
+}
+
+function handlePeriodChip(iso){
+  if(!pendingPeriodConfirm){
+    pendingPeriodConfirm=true;
+    renderMain();
+    periodConfirmTimer=setTimeout(()=>{pendingPeriodConfirm=false;renderMain();},4000);
+    return;
+  }
+  clearTimeout(periodConfirmTimer);
+  pendingPeriodConfirm=false;
+  state.periods=state.periods||[];
+  if(!state.periods.includes(iso))state.periods.push(iso);
+  state.start=iso;
+  selIdx=null;
+  const nCycles=uniqSortedPeriods(state).length-1;
+  save(state);
+  renderMain();
+  toast(nCycles>=2
+    ?`<span class="em">💧</span>Período registrado. Modelo calibrado com ${nCycles} ciclos.`
+    :nCycles===1
+    ?`<span class="em">💧</span>Período registrado. Mais um ciclo e calibramos sua duração real.`
+    :`<span class="em">💧</span>Período registrado.`);
 }
 
 /* ===================== gráfico ===================== */
@@ -486,27 +876,72 @@ function drawChart(curve,today,len,sel,focus){
   if(sel!==today)svg.appendChild(el('circle',{cx:bx(curve[sel]),cy:py(sel),r:5,fill:'none',stroke:'var(--blue)','stroke-width':2.2}));
 }
 
-/* ===================== sheet ===================== */
+/* ===================== sheets ===================== */
 const sheet=document.getElementById('sheet');
+const repSheet=document.getElementById('repSheet');
 let tmpTdah=false,tmpMg=0;
+
 function paintDoses(){document.querySelectorAll('#doses .dose').forEach(b=>b.classList.toggle('sel',+b.dataset.mg===tmpMg));}
 function paintTdah(){document.getElementById('tdahToggle').setAttribute('aria-checked',tmpTdah?'true':'false');document.getElementById('medSection').style.display=tmpTdah?'block':'none';}
-function openSheet(){
+function openSettings(){
   document.getElementById('cfgDate').value=state.start;
   document.getElementById('cfgDate').max=isoToday();
-  document.getElementById('cycVal').textContent=state.cycle;
+  const eff=effectiveCycle(state);
+  document.getElementById('cycVal').textContent=eff.len;
   tmpTdah=!!state.tdah; tmpMg=state.medMg||0; paintTdah(); paintDoses();
+  const nP=uniqSortedPeriods(state).length, nM=Object.keys(state.moods||{}).length;
+  document.getElementById('statsLine').textContent=
+    `${nP} período${nP!==1?'s':''} · ${nM} humor${nM!==1?'es':''} anotado${nM!==1?'s':''}`;
   sheet.classList.add('open');
 }
 const closeSheet=()=>sheet.classList.remove('open');
 sheet.addEventListener('click',e=>{if(e.target===sheet)closeSheet();});
+
+function openReport(idx,len,tdah,mg){
+  const k=phaseKey(idx,len);
+  const ph=PHASES[k];
+  const r=REPORT[k];
+  document.getElementById('repSub').textContent=`Dia ${idx+1} · ${ph.name}`;
+  const body=document.getElementById('repBody');
+  const colorBg=`color-mix(in srgb, ${ph.color} 16%, transparent)`;
+  body.innerHTML=`
+    <div class="repHead">
+      <div class="ic" style="background:${colorBg};color:${ph.color}">${ic(ph.icon)}</div>
+      <div class="body">
+        <div class="t">${ph.name}</div>
+        <div class="s">Dia ${idx+1} de ${len}</div>
+      </div>
+    </div>
+    <div class="repSummary"><div class="lbl">O que está acontecendo</div><p>${r.summary}</p></div>
+
+    <div class="seclabel">${ic('i-check')}Faça hoje</div>
+    <div class="repList">${r.do.map(x=>`<div class="repLi do"><span class="dot"></span><span>${x}</span></div>`).join('')}</div>
+
+    <div class="seclabel">${ic('i-stop')}Evite hoje</div>
+    <div class="repList">${r.avoid.map(x=>`<div class="repLi avoid"><span class="dot"></span><span>${x}</span></div>`).join('')}</div>
+
+    <div class="seclabel">${ic('i-briefcase')}Vida profissional</div>
+    <div class="repCard">${r.work}</div>
+
+    <div class="seclabel">${ic('i-brain')}Decisões</div>
+    <div class="repCard">${r.decide}</div>
+
+    ${tdah?`
+    <div class="seclabel">${ic('i-target')}TDAH & foco${mg>0?' · '+mg+' mg':''}</div>
+    <div class="repCard tdah"><div class="lbl">Atenção específica</div>${r.tdah}</div>`:''}
+  `;
+  repSheet.classList.add('open');
+}
+repSheet.addEventListener('click',e=>{if(e.target===repSheet)repSheet.classList.remove('open');});
+
 document.getElementById('tdahToggle').onclick=()=>{tmpTdah=!tmpTdah;if(!tmpTdah)tmpMg=0;paintTdah();paintDoses();};
 document.getElementById('doses').addEventListener('click',e=>{const b=e.target.closest('.dose');if(!b)return;tmpMg=+b.dataset.mg;paintDoses();});
 document.getElementById('cycMinus').onclick=()=>{let n=+document.getElementById('cycVal').textContent;document.getElementById('cycVal').textContent=Math.max(21,n-1);};
 document.getElementById('cycPlus').onclick=()=>{let n=+document.getElementById('cycVal').textContent;document.getElementById('cycVal').textContent=Math.min(35,n+1);};
 document.getElementById('cfgSave').onclick=()=>{
   const d=document.getElementById('cfgDate').value,c=+document.getElementById('cycVal').textContent;
-  if(d)state.start=d; state.cycle=c; state.tdah=tmpTdah; state.medMg=tmpTdah?tmpMg:0;
+  if(d&&d!==state.start){state.start=d;state.periods=state.periods||[];if(!state.periods.includes(d))state.periods.push(d);}
+  state.cycle=c; state.tdah=tmpTdah; state.medMg=tmpTdah?tmpMg:0;
   selIdx=null; save(state); closeSheet(); render();
 };
 document.getElementById('cfgReset').onclick=()=>{try{localStorage.removeItem(KEY);}catch(e){}state=null;selIdx=null;closeSheet();render();};
