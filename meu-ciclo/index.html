@@ -131,6 +131,8 @@
   }
   .periodChip:active{background:color-mix(in srgb, var(--pink) 22%, transparent);transform:scale(.97);}
   .periodChip.confirm{background:var(--pink);color:#fff;animation:pulse 1.5s ease-in-out infinite;}
+  .periodChip.undo{background:color-mix(in srgb, var(--green) 14%, transparent);color:var(--green);}
+  .periodChip.undo:active{background:color-mix(in srgb, var(--green) 24%, transparent);}
   .periodChip svg{width:13px;height:13px;}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
 
@@ -166,6 +168,50 @@
   .learnTip .x{background:none;border:none;color:var(--label3);cursor:pointer;
     padding:0;width:18px;height:18px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;}
   .learnTip .x svg{width:14px;height:14px;}
+
+  /* Smart info cards (one slot, priority: validation > venvanse > golden) */
+  .infoCard{display:flex;gap:11px;align-items:flex-start;padding:13px 15px;
+    border-radius:14px;flex:0 0 auto;}
+  .infoCard .ic{flex:0 0 auto;width:32px;height:32px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;margin-top:1px;}
+  .infoCard .ic svg{width:18px;height:18px;}
+  .infoCard .body{flex:1;min-width:0;}
+  .infoCard .t{font-size:13.5px;font-weight:600;line-height:1.3;margin-bottom:3px;}
+  .infoCard .s{font-size:12px;line-height:1.4;color:var(--label2);}
+  .infoCard .s b{color:var(--label);font-weight:600;}
+  .infoCard.validation{background:color-mix(in srgb, var(--purple) 12%, var(--bg-elev));}
+  .infoCard.validation .ic{background:color-mix(in srgb, var(--purple) 22%, transparent);color:var(--purple);}
+  .infoCard.venvanse{background:color-mix(in srgb, var(--orange) 12%, var(--bg-elev));}
+  .infoCard.venvanse .ic{background:color-mix(in srgb, var(--orange) 22%, transparent);color:var(--orange);}
+  .infoCard.golden{background:color-mix(in srgb, var(--yellow) 14%, var(--bg-elev));}
+  .infoCard.golden .ic{background:color-mix(in srgb, var(--yellow) 26%, transparent);color:#d4a300;}
+  @media (prefers-color-scheme: dark){.infoCard.golden .ic{color:var(--yellow);}}
+
+  /* Report decision banner */
+  .repBanner{display:flex;align-items:center;gap:13px;border-radius:14px;padding:14px 16px;margin-top:12px;}
+  .repBanner.green{background:color-mix(in srgb, var(--green) 16%, var(--bg-elev));color:var(--label);}
+  .repBanner.yellow{background:color-mix(in srgb, var(--yellow) 18%, var(--bg-elev));color:var(--label);}
+  .repBanner.orange{background:color-mix(in srgb, var(--orange) 16%, var(--bg-elev));color:var(--label);}
+  .repBanner.red{background:color-mix(in srgb, var(--red) 14%, var(--bg-elev));color:var(--label);}
+  .repBanner .light{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .repBanner .light svg{width:20px;height:20px;color:#fff;}
+  .repBanner.green .light{background:var(--green);}
+  .repBanner.yellow .light{background:#d4a300;}
+  .repBanner.orange .light{background:var(--orange);}
+  .repBanner.red .light{background:var(--red);}
+  .repBanner .body{flex:1;min-width:0;}
+  .repBanner .t{font-size:15px;font-weight:600;line-height:1.2;}
+  .repBanner .s{font-size:12.5px;color:var(--label2);margin-top:3px;line-height:1.35;}
+
+  /* Golden window card in report */
+  .repGolden{background:color-mix(in srgb, var(--yellow) 13%, var(--bg-elev));border-radius:14px;padding:13px 15px;margin-top:12px;display:flex;gap:12px;align-items:flex-start;}
+  .repGolden .ic{width:32px;height:32px;border-radius:10px;background:color-mix(in srgb, var(--yellow) 28%, transparent);color:#b78900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  @media (prefers-color-scheme: dark){.repGolden .ic{color:var(--yellow);}}
+  .repGolden .ic svg{width:18px;height:18px;}
+  .repGolden .body{flex:1;min-width:0;}
+  .repGolden .t{font-size:13.5px;font-weight:600;}
+  .repGolden .s{font-size:12.5px;line-height:1.4;color:var(--label2);margin-top:3px;}
+  .repGolden .s b{color:var(--label);font-weight:600;}
 
   .chartcard{flex:1;min-height:0;display:flex;flex-direction:column;padding:12px 12px 6px;}
   .chead{display:flex;justify-content:space-between;align-items:center;padding:0 4px 4px;}
@@ -222,6 +268,9 @@
   .gitem + .gitem{border-top:1px solid var(--sep);}
   .gitem .gl{font-size:16px;}
   .gitem .gl small{display:block;font-size:12px;color:var(--label2);margin-top:1px;}
+  .delBtn{border:none;background:var(--fill);color:var(--red);font-family:var(--sf);
+    font-size:12px;font-weight:600;padding:5px 10px;border-radius:8px;cursor:pointer;}
+  .delBtn:active{background:color-mix(in srgb,var(--red) 18%,transparent);}
   .stepper{display:flex;align-items:center;gap:0;background:var(--fill);border-radius:8px;overflow:hidden;}
   .stepper button{width:40px;height:32px;border:none;background:transparent;color:var(--blue);font-size:20px;cursor:pointer;}
   .stepper button:active{background:var(--fill2);}
@@ -341,6 +390,9 @@
       </div>
     </div>
 
+    <div class="seclabel" id="periodsLabel" style="display:none">Períodos registrados</div>
+    <div class="glist" id="periodsList" style="display:none"></div>
+
     <div class="btn-row">
       <button class="btn" id="cfgSave">Salvar</button>
       <button class="btn-ghost" id="cfgReset">Recomeçar do zero</button>
@@ -392,6 +444,9 @@
   <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/></symbol>
   <symbol id="i-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></symbol>
   <symbol id="i-bed" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3 18V8m0 5h18v5M21 13v-1.5a3 3 0 0 0-3-3h-6V13"/><circle cx="7" cy="11" r="1.7" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M12 3.5l8 2.5v5a9.5 9.5 0 0 1-8 9 9.5 9.5 0 0 1-8-9V6Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4.5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M12 3.5l2.7 5.7 6.3.9-4.6 4.4 1.1 6.2L12 17.7l-5.5 3 1.1-6.2L3 10.1l6.3-.9z"/></symbol>
+  <symbol id="i-stopwatch" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="7.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M12 9.5v4l2 2M10 3.5h4M12 3.5V6"/></symbol>
 </defs></svg>
 
 <script>
@@ -454,89 +509,97 @@ function decisionForTdah(mood,focus,idx,len){
 }
 
 /* ===================== conteúdo do relatório por fase ===================== */
+/* Sources: Frontiers Endocrinology 2025 (PMC12747961), Skoglund/Karolinska,
+   PMC10751335 (ADHD female pharmacotherapy), Clue/ADDitude. */
 const REPORT={
   menstruation:{
     summary:'Estrogênio e progesterona no chão. Energia física baixa, mas a mente fica clara e introspectiva — bom momento para reflexão e planejamento.',
     do:[
-      'Movimento gentil: caminhada, yoga, alongamento — libera endorfina sem desgastar.',
-      'Coma ferro (lentilha, espinafre, carne vermelha) e magnésio (chocolate amargo, sementes).',
-      'Tarefas solo de pensamento profundo: escrita, planejamento, revisão.',
-      'Priorize 8–9 h de sono e calor no abdômen para cólicas.',
+      'Movimento gentil: caminhada 30 min, yoga restaurativa, alongamento. Libera endorfina sem queimar reservas.',
+      'Coma ferro (lentilha, espinafre, carne vermelha) — você perde até 80 mg neste período.',
+      'Trabalho solo de pensamento profundo: escrita, revisão, planejamento da próxima semana.',
+      'Calor no abdômen + 8–9 h de sono. Magnésio à noite ajuda em cólicas.',
     ],
     avoid:[
-      'Treinos pesados e HIIT — seu corpo já está gastando muita energia.',
-      'Conversas difíceis ou confrontos que podem esperar.',
+      'HIIT, força máxima, treinos longos — seu glicogênio está mais baixo.',
+      'Conversas difíceis ou confrontos que podem esperar 3–4 dias.',
       'Cafeína em excesso (piora cólicas e ansiedade).',
     ],
-    work:'Ótima janela para organizar a próxima semana e fazer "limpeza" de e-mails e listas. Trabalho individual, não colaborativo.',
-    decide:'Adie escolhas grandes. Use a clareza interior para listar opções — decida na fase folicular.',
-    tdah:'Estrogênio baixo → dopamina baixa. A medicação pode parecer menos efetiva. Reduza a expectativa, divida tarefas em micro-passos, e seja gentil consigo.',
+    work:'Janela para organizar e "limpar": e-mails atrasados, listas, pastas. Trabalho individual, não colaborativo. Pitches e kickoffs ficam para a semana que vem.',
+    decide:'Adie escolhas grandes. Use a clareza interior para listar opções — decida na folicular.',
+    tdah:'Estrogênio baixo → dopamina baixa. A medicação pode parecer menos efetiva (efeito documentado). Reduza demandas, divida em micro-passos, e externalize tudo (timer + lista única). Isso passa em 2–3 dias.',
+    decisionLight:{color:'orange',t:'Adiável: melhor esperar',s:'Suas decisões vão sair mais analíticas e menos engajadas — comprometimentos podem parecer pesados sem motivo.'},
   },
   follicular:{
-    summary:'Estrogênio em alta. Energia, criatividade e abertura ao novo no auge. É a janela do mês para começar coisas.',
+    summary:'Estrogênio em alta. Energia, criatividade e abertura ao novo no auge. É a janela do mês para começar coisas — a partir de J7, sua força e VO₂ máx sobem mensurávelmente.',
     do:[
-      'Treinos intensos, esportes coletivos, força — seu corpo aguenta mais.',
-      'Comece projetos novos, aprenda algo difícil, experimente formatos.',
+      'J7–J13: pico de força muscular e resposta ao treino. Se tem 1 grande sessão na semana, faça aqui.',
+      'Comece projetos novos, aprenda algo difícil, experimente formatos novos.',
       'Brainstorm em grupo, networking, conversas exploratórias.',
-      'Cardápio rico em proteínas e vegetais frescos.',
+      'Cardápio rico em proteínas e vegetais frescos. Hidratação caprichada.',
     ],
     avoid:[
-      'Sobrecarregar a agenda — guarde energia para o pico da ovulação.',
-      'Procrastinar tarefas que pedem foco criativo (é agora ou nunca neste ciclo).',
+      'Sobrecarregar a agenda — guarde 30 % de energia para o pico da ovulação.',
+      'Procrastinar tarefas criativas — sua capacidade de conectar ideias está no auge.',
     ],
-    work:'Marque pitches, entrevistas, kickoff de projetos. Sua mente conecta ideias com facilidade.',
-    decide:'Boa fase para decidir, especialmente coisas que envolvem mudança ou risco calculado.',
-    tdah:'Sua melhor janela do mês: medicação responde bem, dopamina mais disponível. Use para os projetos difíceis que você vem evitando.',
+    work:'Marque pitches, entrevistas, kickoff de projetos, sessões de design e brainstorm. Sua mente conecta ideias com facilidade.',
+    decide:'Verde para decidir, incluindo mudanças e risco calculado. Sua tolerância ao novo está alta.',
+    tdah:'Sua melhor janela do mês: estrogênio alto = mais dopamina disponível, medicação responde bem. Use para os projetos difíceis que você vem adiando. Tome decisões importantes esta semana.',
+    decisionLight:{color:'green',t:'Verde: decida hoje',s:'Energia, foco e abertura alinhados. Boa janela para mudanças, novos projetos e compromissos.'},
   },
   ovulation:{
     summary:'Testosterona e estrogênio no pico. Confiança, libido, comunicação verbal e carisma no máximo. Cuidado com impulsividade.',
     do:[
       'Apresentações, pitches, negociações importantes — sua presença está em alta.',
       'Eventos sociais, datas, primeira impressão importa.',
-      'HIIT, esportes de explosão, dança.',
-      'Hidratação reforçada (corpo libera mais energia).',
+      'HIIT, esportes de explosão, dança. Coordenação e tempo de reação no pico.',
+      'Hidratação reforçada (corpo libera mais energia e calor).',
     ],
     avoid:[
       'Compras impulsivas ou decisões "no calor do momento".',
-      'Comprometimentos de longo prazo sem dormir sobre o assunto.',
+      'Comprometimentos de longo prazo sem dormir 1 noite sobre o assunto.',
       'Conflitos verbais — você está mais assertiva e pode ferir sem perceber.',
     ],
-    work:'Sua melhor versão pública. Use para o que precisa de presença e influência. Mas anote ideias antes de assinar.',
+    work:'Sua melhor versão pública. Use para o que precisa de presença e influência. Anote ideias novas — não assine ainda.',
     decide:'Sim para decisões já maduradas. Para decisões novas, espere 24 h antes de finalizar.',
-    tdah:'Foco máximo + impulsividade. Pense duas vezes antes de comprar, dizer sim, ou trocar de plano. Excelente para tarefas que pedem brilho.',
+    tdah:'Foco máximo + impulsividade aumentada. Pense duas vezes antes de comprar, dizer sim, ou trocar de plano. Excelente para tarefas que pedem brilho público.',
+    decisionLight:{color:'yellow',t:'Atenção: decida o já maduro',s:'Carisma e confiança no pico, mas impulsividade também. Decisões novas: espere 24 h.'},
   },
   luteal:{
     summary:'Progesterona sobe, energia desce gradualmente. Foco vira execução e detalhe. Bom para terminar o que começou na folicular.',
     do:[
-      'Trabalho de detalhe: editar, revisar, organizar, documentar.',
-      'Reuniões 1:1, mentoria, conversas profundas.',
-      'Pilates, caminhadas longas, atividades de baixo impacto.',
-      'Carbos complexos e proteína para estabilizar humor.',
+      'Trabalho de detalhe: editar, revisar, organizar, documentar. Sua atenção a falhas está aguçada.',
+      'Reuniões 1:1, mentoria, conversas profundas. Evite multidões.',
+      'Pilates, caminhadas longas, força moderada. Endurance baixa: encurte cardio.',
+      'Carbos complexos + proteína em cada refeição para estabilizar humor.',
     ],
     avoid:[
-      'Começar grandes projetos novos — você não terá energia para sustentar.',
+      'Começar grandes projetos novos — você não terá energia para sustentar até o fim.',
       'Pular refeições (queda de açúcar = irritabilidade rápida).',
+      'HIIT longo — recuperação cai e percepção de esforço sobe.',
     ],
-    work:'Entregue. Sua atenção a falhas é maior — ótimo para QA, revisões e auditoria.',
-    decide:'Boa fase para decisões analíticas. Cuidado com tom: pode parecer mais crítica do que pretende.',
-    tdah:'Resposta à medicação cai 15–25 %. Externalize tudo: listas, lembretes, alarmes. Divida tarefas em pedaços pequenos.',
+    work:'Hora de entregar. Bom para QA, revisões, auditoria, fechamento de sprints. Documente o que aprendeu na folicular.',
+    decide:'Decisões analíticas: sim. Decisões emocionais: cuidado com tom — você pode parecer mais crítica do que pretende.',
+    tdah:'Resposta à medicação cai 15–25 % (documentado). Não é falha sua. Externalize tudo: listas, lembretes, alarmes. Divida tarefas em pedaços de 25 min. Reduza expectativas em 30 %.',
+    decisionLight:{color:'yellow',t:'Decisões analíticas sim, emocionais não',s:'Foco em execução, mas tom mais crítico. Boas escolhas técnicas, espere para conversas difíceis.'},
   },
   premen:{
     summary:'Queda hormonal abrupta. Sensibilidade emocional, energia baixa, percepção crítica aguçada. Não é fraqueza — é informação amplificada.',
     do:[
-      'Priorize sono (9 h se possível), magnésio, ômega-3.',
+      'Priorize sono (9 h se possível), magnésio à noite, ômega-3.',
       'Tarefas administrativas calmas, organização de arquivos.',
-      'Yoga restaurativo, meditação, banho quente.',
-      'Anote o que está te incomodando — vire diário, não decisão.',
+      'Yoga restaurativo, meditação, banho quente. Caminhada ao ar livre.',
+      'Anote o que te incomoda — vire diário, não decisão imediata.',
     ],
     avoid:[
-      'Conversas difíceis adiáveis — espere o ciclo virar.',
-      'Cafeína em excesso, álcool, açúcar refinado.',
-      'Ruminação — pegue o pensamento e escreva, não revisite.',
+      'Conversas difíceis adiáveis — espere o ciclo virar (3–5 dias).',
+      'Cafeína em excesso, álcool, açúcar refinado. Tudo amplifica os sintomas.',
+      'Ruminação — pegue o pensamento, escreva, não revisite.',
     ],
-    work:'Sua crítica é mais aguda agora — informação real, mas com volume amplificado. Anote o que vê, decida o que fazer depois.',
+    work:'Sua crítica está aguda agora — informação real, mas com volume amplificado. Anote o que vê, decida o que fazer depois.',
     decide:'Pause. Anote. Decida quando o ciclo virar.',
-    tdah:'A fase mais difícil. Medicação parece "não funcionar". Reduza demandas, foque no básico, programe descanso. Isso passa.',
+    tdah:'A fase mais difícil. Medicação parece "não funcionar" — não é falha sua, é estrogênio em chão. Reduza demandas em 40 %, foque no básico, programe descanso. Isso passa em 3–5 dias.',
+    decisionLight:{color:'red',t:'Vermelho: não decida hoje',s:'Suas palavras sairão mais duras do que pretende. Anote, durma, retome em 3–5 dias.'},
   },
 };
 
@@ -616,6 +679,44 @@ function personalizedMoodCurve(state,baseLen,baseCurve){
   return{curve,buckets,nMoods:Object.keys(moods).length};
 }
 
+/* low mood streak detection (3 last logs <= 2 + late luteal/premen) */
+function lowMoodStreak(state,idx,len){
+  const logs=Object.entries(state.moods||{}).sort();
+  if(logs.length<3)return{active:false};
+  const last3=logs.slice(-3).map(([,v])=>v);
+  const inLate=idx>=len-8;
+  const allLow=last3.every(v=>v<=2);
+  if(!inLate||!allLow)return{active:false};
+  return{active:true,n:last3.length,daysToReset:Math.max(1,len-idx)};
+}
+
+/* personal golden window from logged moods (mean per cycle-day >= 4) */
+function goldenWindow(buckets){
+  if(!buckets)return null;
+  const good=[];
+  buckets.forEach((obs,i)=>{
+    if(obs.length>=1){
+      const mean=obs.reduce((a,c)=>a+c,0)/obs.length;
+      if(mean>=40)good.push(i);
+    }
+  });
+  if(good.length<2)return null;
+  let bestStart=good[0],bestEnd=good[0],curStart=good[0],curEnd=good[0];
+  for(let k=1;k<good.length;k++){
+    if(good[k]-curEnd<=2)curEnd=good[k];
+    else{if(curEnd-curStart>bestEnd-bestStart){bestStart=curStart;bestEnd=curEnd;}curStart=good[k];curEnd=good[k];}
+  }
+  if(curEnd-curStart>bestEnd-bestStart){bestStart=curStart;bestEnd=curEnd;}
+  return{start:bestStart,end:bestEnd,n:good.length};
+}
+
+/* next date when day-index hits target, given current cycle start */
+function nextDateForIdx(cycleStart,len,targetIdx,fromToday){
+  let d=addDays(cycleStart,targetIdx);
+  while(d<fromToday)d=addDays(d,len);
+  return d;
+}
+
 /* ===================== helpers ===================== */
 const ic=(id,cls)=>`<svg${cls?` class="${cls}"`:''}><use href="#${id}"/></svg>`;
 const MOOD_EMOJIS=['😞','😕','😐','🙂','😄'];
@@ -634,6 +735,8 @@ const app=document.getElementById('app');
 let selIdx=null;
 let pendingPeriodConfirm=false;
 let periodConfirmTimer=null;
+let undoState=null;        /* {iso, prevStart, prevPeriods} after register */
+let undoTimer=null;
 
 function render(){
   if(!state||!state.start){renderSetup();return;}
@@ -669,7 +772,7 @@ function renderMain(){
   const tdah=!!state.tdah, mg=tdah?(state.medMg||0):0;
 
   const baseM=moodCurve(len);
-  const{curve:moodC,nMoods}=personalizedMoodCurve(state,len,baseM);
+  const{curve:moodC,nMoods,buckets:moodBuckets}=personalizedMoodCurve(state,len,baseM);
   const focus=applyMed(focusCurve(len),len,mg);
 
   const today=eff.dayIdx;
@@ -680,7 +783,10 @@ function renderMain(){
   const dec=tdah?decisionForTdah(v,fv,idx,len):decisionFor(v);
 
   const dateForIdx=addDays(eff.cycleStart,idx);
-  const lutealWeak=tdah&&mg>0&&medPhaseFactor(idx,len)<1;
+  const lutealWeak=tdah&&mg>0&&idx>=len-6;
+  const lowStreak=lowMoodStreak(state,today,len);
+  const gw=goldenWindow(moodBuckets);
+  const inGoldenToday=gw&&today>=gw.start&&today<=gw.end;
 
   const isoTodayStr=isoToday();
   const loggedToday=state.moods&&state.moods[isoTodayStr];
@@ -704,10 +810,12 @@ function renderMain(){
         <span class="emojis" id="moodEmojis">${MOOD_EMOJIS.map((e,i)=>`<button class="moodbtn" data-v="${i+1}" aria-label="Mood ${i+1}">${e}</button>`).join('')}</span>
       </div>`;
     }
-    const chipLabel=pendingPeriodConfirm?'Tocar de novo para confirmar':'Registrar período hoje';
-    const chipCls=pendingPeriodConfirm?'periodChip confirm':'periodChip';
+    let chipLabel,chipCls,chipId;
+    if(undoState){chipLabel='✓ Registrado · Desfazer';chipCls='periodChip undo';chipId='undoChip';}
+    else if(pendingPeriodConfirm){chipLabel='Tocar de novo para confirmar';chipCls='periodChip confirm';chipId='periodChip';}
+    else{chipLabel='Registrar período hoje';chipCls='periodChip';chipId='periodChip';}
     logBlock+=`<div class="periodRow">
-      <button class="${chipCls}" id="periodChip">${ic('i-drop')}${chipLabel}</button>
+      <button class="${chipCls}" id="${chipId}">${ic('i-drop')}${chipLabel}</button>
     </div>`;
   }
 
@@ -725,10 +833,37 @@ function renderMain(){
       </div>
     </div>`:'';
 
-  const medNote=lutealWeak?`
-    <div class="mednote">${ic('i-warn')}<p>Nesta fase (lútea/pré-menstrual), a resposta ao Venvanse tende a ser <b>menor</b>. Alguns médicos ajustam a dose nesta semana — converse com o seu antes de mudar.</p></div>`:'';
+  /* Single info card slot — priority: validation > venvanse > golden window */
+  let infoCard='';
+  if(!isPreview){
+    if(lowStreak.active){
+      infoCard=`<div class="infoCard validation">
+        <div class="ic">${ic('i-shield')}</div>
+        <div class="body">
+          <div class="t">Não é você — é o J${today+1}</div>
+          <div class="s">${lowStreak.n} registros baixos seguidos, e você está na queda hormonal prevista da fase lútea. <b>Volta à linha de base estimada em ${lowStreak.daysToReset} dia${lowStreak.daysToReset>1?'s':''}</b> (próximo J1). Isso passa.</div>
+        </div>
+      </div>`;
+    }else if(lutealWeak){
+      infoCard=`<div class="infoCard venvanse">
+        <div class="ic">${ic('i-pill')}</div>
+        <div class="body">
+          <div class="t">Venvanse pode render menos hoje</div>
+          <div class="s">J${today+1} · estrogênio em queda reduz a resposta aos estimulantes em <b>20–30 %</b> (efeito documentado, não falha sua). Estratégia: timer + 1 tarefa única por bloco. Decisões médicas: só com seu psiquiatra.</div>
+        </div>
+      </div>`;
+    }else if(inGoldenToday&&gw.n>=3){
+      infoCard=`<div class="infoCard golden">
+        <div class="ic">${ic('i-star')}</div>
+        <div class="body">
+          <div class="t">Você está na sua janela ouro</div>
+          <div class="s">Seus melhores dias caem entre J${gw.start+1} e J${gw.end+1} (baseado em <b>${gw.n} registros seus</b>). É hoje — bloqueie aqui o que pede sua melhor versão.</div>
+        </div>
+      </div>`;
+    }
+  }
 
-  const learnTip=(!state.dismissedLearnTip&&nMoods<3&&!isPreview)?`
+  const learnTip=(!state.dismissedLearnTip&&nMoods<3&&!isPreview&&!infoCard)?`
     <div class="learnTip">${ic('i-sparkles','ic')}
       <p><b>Como funciona:</b> a cada vez que você anota o humor ou registra suas regras, o app aprende seu padrão e ajusta as previsões. Após 2 ciclos, a curva já reflete o seu ritmo.</p>
       <button class="x" id="dismissTip" aria-label="Fechar">${ic('i-x')}</button>
@@ -756,7 +891,7 @@ function renderMain(){
          <div class="body">
            <div class="eyebrow">${isPreview?'Previsão · '+fmt(dateForIdx):'Humor de hoje'}</div>
            <div class="bignum">${pct}<span class="u">%</span></div>
-           <div class="meta">${ic(ph.icon)}${moodWord(v)} · ${ph.name}</div>
+           <div class="meta">${ic(ph.icon)}${moodWord(v)} · ${ph.name}${(!isPreview&&inGoldenToday&&gw.n>=3)?' · <span style="color:#b78900;font-weight:600">✨ janela ouro</span>':''}</div>
          </div>
          ${isPreview?`<button class="today-btn" id="todayBtn">Hoje</button>`:''}
        </div>
@@ -770,7 +905,7 @@ function renderMain(){
        <div class="body"><div class="t">${dec.t}</div><div class="s">${dec.s}</div></div>
      </div>
 
-     ${medNote}
+     ${infoCard}
      ${learnTip}
 
      <div class="card chartcard">
@@ -814,8 +949,22 @@ function renderMain(){
 
   const pc=document.getElementById('periodChip');
   if(pc)pc.onclick=()=>handlePeriodChip(isoTodayStr);
+  const uc=document.getElementById('undoChip');
+  if(uc)uc.onclick=undoLastPeriod;
 
   drawChart(moodC,today,len,idx,tdah?focus:null);
+}
+
+function undoLastPeriod(){
+  if(!undoState)return;
+  clearTimeout(undoTimer);
+  state.periods=undoState.prevPeriods.slice();
+  state.start=undoState.prevStart;
+  undoState=null;
+  selIdx=null;
+  save(state);
+  renderMain();
+  toast(`<span class="em">↩️</span>Registro desfeito.`);
 }
 
 function handlePeriodChip(iso){
@@ -828,6 +977,10 @@ function handlePeriodChip(iso){
   clearTimeout(periodConfirmTimer);
   pendingPeriodConfirm=false;
   state.periods=state.periods||[];
+  /* Save undo state BEFORE mutation */
+  undoState={iso,prevStart:state.start,prevPeriods:state.periods.slice()};
+  clearTimeout(undoTimer);
+  undoTimer=setTimeout(()=>{undoState=null;renderMain();},6000);
   if(!state.periods.includes(iso))state.periods.push(iso);
   state.start=iso;
   selIdx=null;
@@ -845,35 +998,60 @@ function handlePeriodChip(iso){
 function drawChart(curve,today,len,sel,focus){
   const svg=document.getElementById('chart'),NS='http://www.w3.org/2000/svg';
   while(svg.firstChild)svg.removeChild(svg.firstChild);
-  const W=320,rowH=22,topPad=10,botPad=10,H=topPad+botPad+rowH*(len-1);
+  const W=320,H=160,topPad=10,botPad=14,leftPad=10,rightPad=10;
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-  const sidePad=14,xL=sidePad,xR=W-sidePad,cx=(xL+xR)/2,half=(xR-xL)/2,y0=topPad,y1=H-botPad;
-  const py=i=>y0+(y1-y0)*(i/(len-1)), bx=val=>cx+half*(val/100);
+  svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+  const innerW=W-leftPad-rightPad, innerH=H-topPad-botPad, midY=topPad+innerH/2, half=innerH/2;
+  const colW=innerW/len, barW=Math.max(4,Math.min(14,colW*0.62));
+  const px=i=>leftPad+colW*(i+0.5);
+  const py=val=>midY-(val/100)*half;
   const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
   const sepCol=getComputedStyle(document.body).getPropertyValue('--label3')||'rgba(0,0,0,0.2)';
 
-  svg.appendChild(el('line',{x1:cx,x2:cx,y1:y0-2,y2:y1+2,stroke:sepCol,'stroke-width':1}));
-  if(sel!==today)svg.appendChild(el('rect',{x:4,y:py(sel)-rowH*0.5,width:W-8,height:rowH,rx:7,fill:'color-mix(in srgb, var(--blue) 12%, transparent)'}));
+  /* mid baseline */
+  svg.appendChild(el('line',{x1:leftPad-2,x2:W-rightPad+2,y1:midY,y2:midY,stroke:sepCol,'stroke-width':1}));
 
+  /* selected day vertical band */
+  if(sel!==today){
+    const sx=px(sel);
+    svg.appendChild(el('rect',{x:sx-colW/2,y:4,width:colW,height:H-8,rx:5,fill:'color-mix(in srgb, var(--blue) 13%, transparent)'}));
+  }
+
+  /* mood bars */
   curve.forEach((val,i)=>{
-    const y=py(i),x=bx(val),good=val>=0,xx=Math.min(cx,x),w=Math.abs(x-cx),hl=(i===sel);
-    svg.appendChild(el('rect',{x:xx,y:y-rowH*0.28,width:Math.max(w,1),height:rowH*0.56,rx:rowH*0.28,
-      fill:good?'var(--green)':'var(--red)',opacity:hl?1:0.34}));
-    const hit=el('rect',{x:0,y:y-rowH*0.5,width:W,height:rowH,fill:'transparent',style:'cursor:pointer'});
+    const x=px(i), y=py(val), good=val>=0, top=Math.min(midY,y), h=Math.max(Math.abs(midY-y),2), hl=(i===sel);
+    svg.appendChild(el('rect',{x:x-barW/2,y:top,width:barW,height:h,rx:Math.min(barW/2,4),
+      fill:good?'var(--green)':'var(--red)',opacity:hl?1:0.36}));
+    const hit=el('rect',{x:x-colW/2,y:0,width:colW,height:H,fill:'transparent',style:'cursor:pointer'});
     hit.addEventListener('click',()=>{selIdx=i;renderMain();});
     svg.appendChild(hit);
   });
 
+  /* focus polyline (TDAH) */
   if(focus){
-    let d=''; focus.forEach((val,i)=>{d+=(i===0?'M':'L')+bx(val)+' '+py(i)+' ';});
-    svg.appendChild(el('path',{d,fill:'none',stroke:'var(--blue)','stroke-width':2.2,'stroke-linejoin':'round','stroke-linecap':'round'}));
-    focus.forEach((val,i)=>svg.appendChild(el('circle',{cx:bx(val),cy:py(i),r:i===sel?2.8:1.5,fill:'var(--blue)'})));
+    let d=''; focus.forEach((val,i)=>{d+=(i===0?'M':'L')+px(i)+' '+py(val)+' ';});
+    svg.appendChild(el('path',{d,fill:'none',stroke:'var(--blue)','stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round',opacity:0.9}));
+    focus.forEach((val,i)=>svg.appendChild(el('circle',{cx:px(i),cy:py(val),r:i===sel?2.6:1.4,fill:'var(--blue)'})));
   }
 
-  const yT=py(today);
-  svg.appendChild(el('line',{x1:6,x2:W-6,y1:yT,y2:yT,stroke:'var(--label2)','stroke-width':1,'stroke-dasharray':'2 3',opacity:0.6}));
-  svg.appendChild(el('circle',{cx:bx(curve[today]),cy:yT,r:3.4,fill:'var(--label)'}));
-  if(sel!==today)svg.appendChild(el('circle',{cx:bx(curve[sel]),cy:py(sel),r:5,fill:'none',stroke:'var(--blue)','stroke-width':2.2}));
+  /* today vertical dashed + dot */
+  const tx=px(today);
+  svg.appendChild(el('line',{x1:tx,x2:tx,y1:4,y2:H-4,stroke:'var(--label2)','stroke-width':1,'stroke-dasharray':'2 3',opacity:0.55}));
+  svg.appendChild(el('circle',{cx:tx,cy:py(curve[today]),r:3.2,fill:'var(--label)'}));
+
+  /* selected outline */
+  if(sel!==today)svg.appendChild(el('circle',{cx:px(sel),cy:py(curve[sel]),r:4.5,fill:'none',stroke:'var(--blue)','stroke-width':2}));
+
+  /* axis labels: day numbers (1, 7, 14, 21, len) */
+  const ticks=[0,Math.floor((len-1)/4),Math.floor((len-1)/2),Math.floor(3*(len-1)/4),len-1];
+  const seen=new Set();
+  ticks.forEach(i=>{
+    if(seen.has(i))return; seen.add(i);
+    const tx2=px(i);
+    const txt=el('text',{x:tx2,y:H-3,'text-anchor':'middle','font-size':'8.5','font-family':'-apple-system,sans-serif',fill:'var(--label3)'});
+    txt.textContent='J'+(i+1);
+    svg.appendChild(txt);
+  });
 }
 
 /* ===================== sheets ===================== */
@@ -884,15 +1062,43 @@ let tmpTdah=false,tmpMg=0;
 function paintDoses(){document.querySelectorAll('#doses .dose').forEach(b=>b.classList.toggle('sel',+b.dataset.mg===tmpMg));}
 function paintTdah(){document.getElementById('tdahToggle').setAttribute('aria-checked',tmpTdah?'true':'false');document.getElementById('medSection').style.display=tmpTdah?'block':'none';}
 function openSettings(){
-  document.getElementById('cfgDate').value=state.start;
+  const sorted=uniqSortedPeriods(state);
+  document.getElementById('cfgDate').value=sorted[sorted.length-1]||state.start;
   document.getElementById('cfgDate').max=isoToday();
   const eff=effectiveCycle(state);
   document.getElementById('cycVal').textContent=eff.len;
   tmpTdah=!!state.tdah; tmpMg=state.medMg||0; paintTdah(); paintDoses();
-  const nP=uniqSortedPeriods(state).length, nM=Object.keys(state.moods||{}).length;
+  const nP=sorted.length, nM=Object.keys(state.moods||{}).length;
   document.getElementById('statsLine').textContent=
     `${nP} período${nP!==1?'s':''} · ${nM} humor${nM!==1?'es':''} anotado${nM!==1?'s':''}`;
+  paintPeriodsList(sorted);
   sheet.classList.add('open');
+}
+function paintPeriodsList(sorted){
+  const lbl=document.getElementById('periodsLabel'), list=document.getElementById('periodsList');
+  if(sorted.length<=1){lbl.style.display='none';list.style.display='none';return;}
+  lbl.style.display='';list.style.display='';
+  list.innerHTML=sorted.slice().reverse().map((iso,i)=>{
+    const d=parseD(iso);
+    const isLatest=i===0;
+    return `<div class="gitem">
+      <span class="gl">${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}${isLatest?' <small>ciclo atual</small>':''}</span>
+      ${sorted.length>1?`<button class="delBtn" data-iso="${iso}">Apagar</button>`:''}
+    </div>`;
+  }).join('');
+  list.querySelectorAll('.delBtn').forEach(b=>b.onclick=()=>{
+    const iso=b.dataset.iso;
+    state.periods=(state.periods||[]).filter(p=>p!==iso);
+    const after=uniqSortedPeriods(state);
+    state.start=after[after.length-1]||state.start;
+    save(state);
+    paintPeriodsList(after);
+    document.getElementById('cfgDate').value=state.start;
+    const eff2=effectiveCycle(state);
+    document.getElementById('cycVal').textContent=eff2.len;
+    document.getElementById('statsLine').textContent=
+      `${after.length} período${after.length!==1?'s':''} · ${Object.keys(state.moods||{}).length} humor${Object.keys(state.moods||{}).length!==1?'es':''} anotado${Object.keys(state.moods||{}).length!==1?'s':''}`;
+  });
 }
 const closeSheet=()=>sheet.classList.remove('open');
 sheet.addEventListener('click',e=>{if(e.target===sheet)closeSheet();});
@@ -901,9 +1107,43 @@ function openReport(idx,len,tdah,mg){
   const k=phaseKey(idx,len);
   const ph=PHASES[k];
   const r=REPORT[k];
+  const eff=effectiveCycle(state);
+  const baseM=moodCurve(len);
+  const{buckets:moodBuckets}=personalizedMoodCurve(state,len,baseM);
+  const gw=goldenWindow(moodBuckets);
+  const lowStreak=lowMoodStreak(state,idx,len);
+  const ls=r.decisionLight||{color:'yellow',t:'Razoável',s:'Confira como se sente.'};
   document.getElementById('repSub').textContent=`Dia ${idx+1} · ${ph.name}`;
   const body=document.getElementById('repBody');
   const colorBg=`color-mix(in srgb, ${ph.color} 16%, transparent)`;
+
+  /* Golden window block (if data) */
+  let gwBlock='';
+  if(gw&&gw.n>=3){
+    const nextStart=nextDateForIdx(eff.cycleStart,len,gw.start,todayMid());
+    const nextEnd=nextDateForIdx(eff.cycleStart,len,gw.end,todayMid());
+    const inNow=idx>=gw.start&&idx<=gw.end;
+    gwBlock=`<div class="repGolden">
+      <div class="ic">${ic('i-star')}</div>
+      <div class="body">
+        <div class="t">${inNow?'Você está na sua janela ouro':'Sua janela ouro'}</div>
+        <div class="s">Seus melhores dias caem entre <b>J${gw.start+1} e J${gw.end+1}</b> (baseado em ${gw.n} registros seus). ${inNow?'É hoje — use para o que importa.':`Próxima: <b>${fmt(nextStart)} – ${fmt(nextEnd)}</b>. Bloqueie agora seu trabalho focado.`}</div>
+      </div>
+    </div>`;
+  }
+
+  /* Validation block (low streak in late luteal/premen) */
+  let valBlock='';
+  if(lowStreak.active){
+    valBlock=`<div class="infoCard validation" style="margin-top:12px">
+      <div class="ic">${ic('i-shield')}</div>
+      <div class="body">
+        <div class="t">Não é você — é o J${idx+1}</div>
+        <div class="s">${lowStreak.n} registros baixos seguidos na queda hormonal prevista. <b>Volta à linha de base em ${lowStreak.daysToReset} dia${lowStreak.daysToReset>1?'s':''}</b>. Não tome isso como verdade permanente.</div>
+      </div>
+    </div>`;
+  }
+
   body.innerHTML=`
     <div class="repHead">
       <div class="ic" style="background:${colorBg};color:${ph.color}">${ic(ph.icon)}</div>
@@ -912,6 +1152,15 @@ function openReport(idx,len,tdah,mg){
         <div class="s">Dia ${idx+1} de ${len}</div>
       </div>
     </div>
+
+    <div class="repBanner ${ls.color}">
+      <div class="light">${ic(ls.color==='green'?'i-check':ls.color==='red'?'i-stop':'i-stopwatch')}</div>
+      <div class="body"><div class="t">${ls.t}</div><div class="s">${ls.s}</div></div>
+    </div>
+
+    ${gwBlock}
+    ${valBlock}
+
     <div class="repSummary"><div class="lbl">O que está acontecendo</div><p>${r.summary}</p></div>
 
     <div class="seclabel">${ic('i-check')}Faça hoje</div>
@@ -940,7 +1189,19 @@ document.getElementById('cycMinus').onclick=()=>{let n=+document.getElementById(
 document.getElementById('cycPlus').onclick=()=>{let n=+document.getElementById('cycVal').textContent;document.getElementById('cycVal').textContent=Math.min(35,n+1);};
 document.getElementById('cfgSave').onclick=()=>{
   const d=document.getElementById('cfgDate').value,c=+document.getElementById('cycVal').textContent;
-  if(d&&d!==state.start){state.start=d;state.periods=state.periods||[];if(!state.periods.includes(d))state.periods.push(d);}
+  if(d){
+    state.periods=state.periods||[];
+    /* Replace the most recent period entry, don't add a duplicate one.
+       This makes the date input mean "the current cycle start". */
+    const sorted=[...new Set(state.periods)].sort();
+    if(sorted.length>0){
+      const latest=sorted[sorted.length-1];
+      state.periods=state.periods.filter(p=>p!==latest);
+    }
+    if(!state.periods.includes(d))state.periods.push(d);
+    state.start=d;
+    undoState=null; clearTimeout(undoTimer);
+  }
   state.cycle=c; state.tdah=tmpTdah; state.medMg=tmpTdah?tmpMg:0;
   selIdx=null; save(state); closeSheet(); render();
 };
