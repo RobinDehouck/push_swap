@@ -74,6 +74,7 @@
   .iconbtn svg{width:20px;height:20px;transition:transform .4s cubic-bezier(.3,1.3,.4,1);}
   .iconbtn:active{transform:scale(0.9);background:var(--fill);box-shadow:0 1px 2px rgba(0,0,0,0.1);}
   .iconbtn.gear:active svg{transform:rotate(50deg);}
+  .iconbtn.period{color:var(--pink);}
 
   main{flex:1;display:flex;flex-direction:column;gap:11px;min-height:0;}
 
@@ -114,27 +115,6 @@
   .loggedRow .ch{margin-left:auto;border:none;background:var(--fill);color:var(--blue);
     font-family:var(--sf);font-size:12px;font-weight:600;padding:5px 10px;border-radius:8px;cursor:pointer;}
   .loggedRow .ch:active{background:var(--fill2);}
-
-  /* Period chip row */
-  .periodRow{
-    margin-top:9px;padding-top:9px;border-top:0.5px solid var(--sep);
-    display:flex;justify-content:center;
-  }
-  .periodChip{
-    border:none;cursor:pointer;
-    background:color-mix(in srgb, var(--pink) 13%, transparent);
-    color:var(--pink);font-family:var(--sf);
-    font-size:12.5px;font-weight:600;
-    padding:7px 13px;border-radius:11px;
-    display:inline-flex;align-items:center;gap:5px;
-    transition:background .15s,transform .15s;
-  }
-  .periodChip:active{background:color-mix(in srgb, var(--pink) 22%, transparent);transform:scale(.97);}
-  .periodChip.confirm{background:var(--pink);color:#fff;animation:pulse 1.5s ease-in-out infinite;}
-  .periodChip.undo{background:color-mix(in srgb, var(--green) 14%, transparent);color:var(--green);}
-  .periodChip.undo:active{background:color-mix(in srgb, var(--green) 24%, transparent);}
-  .periodChip svg{width:13px;height:13px;}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
 
   /* focus row */
   .focus .body{flex:1;min-width:0;}
@@ -329,9 +309,42 @@
     box-shadow:0 8px 24px rgba(0,0,0,0.3);
     opacity:0;pointer-events:none;
     transition:opacity .25s,transform .25s cubic-bezier(.3,1.3,.5,1);
-    z-index:40;max-width:84vw;text-align:center;}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-  .toast .em{margin-right:5px;}
+    z-index:40;max-width:84vw;text-align:center;
+    display:inline-flex;align-items:center;gap:10px;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+  .toast .em{margin-right:1px;}
+  .toast .undoBtn{border:none;background:rgba(255,255,255,0.18);
+    color:inherit;font-family:var(--sf);font-size:12px;font-weight:600;
+    padding:5px 11px;border-radius:8px;cursor:pointer;flex:0 0 auto;}
+  .toast .undoBtn:active{background:rgba(255,255,255,0.28);}
+
+  /* Modal (iOS alert style) */
+  .modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,0.4);
+    display:none;align-items:center;justify-content:center;padding:24px;}
+  .modal.open{display:flex;animation:fade .2s ease;}
+  .modal-inner{background:var(--bg-elev);border-radius:18px;
+    max-width:340px;width:100%;padding:22px 20px 16px;text-align:center;
+    box-shadow:0 18px 50px rgba(0,0,0,0.4);
+    animation:popin .28s cubic-bezier(.3,1.3,.5,1);}
+  @keyframes popin{from{transform:scale(0.92);opacity:0}to{transform:scale(1);opacity:1}}
+  .modal .mi{width:46px;height:46px;border-radius:13px;margin:0 auto 12px;
+    background:color-mix(in srgb, var(--pink) 16%, transparent);color:var(--pink);
+    display:flex;align-items:center;justify-content:center;}
+  .modal .mi svg{width:26px;height:26px;}
+  .modal h4{font-size:17px;font-weight:600;letter-spacing:0.1px;margin-bottom:6px;}
+  .modal .mdesc{font-size:13px;color:var(--label2);line-height:1.4;margin-bottom:16px;}
+  .modal .mdate{margin-bottom:16px;}
+  .modal .mdate label{display:block;font-size:12px;color:var(--label2);margin-bottom:6px;text-align:left;padding:0 4px;}
+  .modal .mdate input{width:100%;font-family:var(--sf);font-size:15px;color:var(--label);
+    background:var(--fill);border:none;border-radius:10px;padding:11px 12px;font-weight:500;
+    text-align:center;}
+  .modal-actions{display:flex;gap:8px;}
+  .modal-btn{flex:1;border:none;border-radius:11px;font-family:var(--sf);
+    font-size:15px;font-weight:600;padding:13px;cursor:pointer;}
+  .modal-btn.cancel{background:var(--fill);color:var(--label);}
+  .modal-btn.cancel:active{background:var(--fill2);}
+  .modal-btn.confirm{background:var(--pink);color:#fff;}
+  .modal-btn.confirm:active{opacity:0.8;}
 </style>
 </head>
 <body>
@@ -409,6 +422,23 @@
     <div class="sub3" id="repSub"></div>
     <div id="repBody"></div>
     <p class="repDisc">Sugestões gerais baseadas na fase atual do seu ciclo. Adapte ao seu corpo e bom senso. Não substitui orientação médica.</p>
+  </div>
+</div>
+
+<!-- Period modal -->
+<div class="modal" id="periodModal">
+  <div class="modal-inner">
+    <div class="mi"><svg><use href="#i-drop"/></svg></div>
+    <h4>Registrar início da menstruação</h4>
+    <p class="mdesc">Será marcado como o primeiro dia deste ciclo e usado para todos os cálculos.</p>
+    <div class="mdate">
+      <label for="periodModalDate">Data</label>
+      <input type="date" id="periodModalDate">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" id="periodModalCancel">Cancelar</button>
+      <button class="modal-btn confirm" id="periodModalConfirm">Registrar</button>
+    </div>
   </div>
 </div>
 
@@ -733,8 +763,6 @@ function toast(msg,ms){
 /* ===================== render ===================== */
 const app=document.getElementById('app');
 let selIdx=null;
-let pendingPeriodConfirm=false;
-let periodConfirmTimer=null;
 let undoState=null;        /* {iso, prevStart, prevPeriods} after register */
 let undoTimer=null;
 
@@ -810,13 +838,6 @@ function renderMain(){
         <span class="emojis" id="moodEmojis">${MOOD_EMOJIS.map((e,i)=>`<button class="moodbtn" data-v="${i+1}" aria-label="Mood ${i+1}">${e}</button>`).join('')}</span>
       </div>`;
     }
-    let chipLabel,chipCls,chipId;
-    if(undoState){chipLabel='✓ Registrado · Desfazer';chipCls='periodChip undo';chipId='undoChip';}
-    else if(pendingPeriodConfirm){chipLabel='Tocar de novo para confirmar';chipCls='periodChip confirm';chipId='periodChip';}
-    else{chipLabel='Registrar período hoje';chipCls='periodChip';chipId='periodChip';}
-    logBlock+=`<div class="periodRow">
-      <button class="${chipCls}" id="${chipId}">${ic('i-drop')}${chipLabel}</button>
-    </div>`;
   }
 
   /* Focus block */
@@ -879,6 +900,7 @@ function renderMain(){
        </div>
      </div>
      ${isPreview?'':`<div class="headBtns">
+       <button class="iconbtn period" id="periodBtn" aria-label="Registrar período">${ic('i-drop')}</button>
        <button class="iconbtn" id="reportBtn" aria-label="Relatório">${ic('i-report')}</button>
        <button class="iconbtn gear" id="gearBtn" aria-label="Ajustes">${ic('i-gear')}</button>
      </div>`}
@@ -947,10 +969,8 @@ function renderMain(){
       :`<span class="em">${MOOD_EMOJIS[val-1]}</span>Anotado.`);
   });
 
-  const pc=document.getElementById('periodChip');
-  if(pc)pc.onclick=()=>handlePeriodChip(isoTodayStr);
-  const uc=document.getElementById('undoChip');
-  if(uc)uc.onclick=undoLastPeriod;
+  const pBtn=document.getElementById('periodBtn');
+  if(pBtn)pBtn.onclick=openPeriodModal;
 
   drawChart(moodC,today,len,idx,tdah?focus:null);
 }
@@ -967,31 +987,33 @@ function undoLastPeriod(){
   toast(`<span class="em">↩️</span>Registro desfeito.`);
 }
 
-function handlePeriodChip(iso){
-  if(!pendingPeriodConfirm){
-    pendingPeriodConfirm=true;
-    renderMain();
-    periodConfirmTimer=setTimeout(()=>{pendingPeriodConfirm=false;renderMain();},4000);
-    return;
-  }
-  clearTimeout(periodConfirmTimer);
-  pendingPeriodConfirm=false;
+function openPeriodModal(){
+  const inp=document.getElementById('periodModalDate');
+  inp.value=isoToday();
+  inp.max=isoToday();
+  document.getElementById('periodModal').classList.add('open');
+}
+function closePeriodModal(){document.getElementById('periodModal').classList.remove('open');}
+function confirmPeriodModal(){
+  const iso=document.getElementById('periodModalDate').value;
+  if(!iso){closePeriodModal();return;}
   state.periods=state.periods||[];
-  /* Save undo state BEFORE mutation */
   undoState={iso,prevStart:state.start,prevPeriods:state.periods.slice()};
   clearTimeout(undoTimer);
-  undoTimer=setTimeout(()=>{undoState=null;renderMain();},6000);
+  undoTimer=setTimeout(()=>{undoState=null;},6000);
   if(!state.periods.includes(iso))state.periods.push(iso);
   state.start=iso;
   selIdx=null;
   const nCycles=uniqSortedPeriods(state).length-1;
   save(state);
+  closePeriodModal();
   renderMain();
-  toast(nCycles>=2
-    ?`<span class="em">💧</span>Período registrado. Modelo calibrado com ${nCycles} ciclos.`
-    :nCycles===1
-    ?`<span class="em">💧</span>Período registrado. Mais um ciclo e calibramos sua duração real.`
-    :`<span class="em">💧</span>Período registrado.`);
+  const isToday=iso===isoToday();
+  const baseMsg=isToday?'Período registrado.':`Registrado em ${fmt(parseD(iso))}.`;
+  const extra=nCycles>=2?` Modelo calibrado com ${nCycles} ciclos.`
+    :nCycles===1?' Mais um ciclo e calibramos sua duração real.':'';
+  toast(`<span class="em">💧</span>${baseMsg}${extra}<button class="undoBtn" id="toastUndo">Desfazer</button>`,6000);
+  setTimeout(()=>{const b=document.getElementById('toastUndo');if(b)b.onclick=undoLastPeriod;},10);
 }
 
 /* ===================== gráfico ===================== */
@@ -1182,6 +1204,12 @@ function openReport(idx,len,tdah,mg){
   repSheet.classList.add('open');
 }
 repSheet.addEventListener('click',e=>{if(e.target===repSheet)repSheet.classList.remove('open');});
+
+/* period modal wiring */
+const periodModal=document.getElementById('periodModal');
+periodModal.addEventListener('click',e=>{if(e.target===periodModal)closePeriodModal();});
+document.getElementById('periodModalCancel').onclick=closePeriodModal;
+document.getElementById('periodModalConfirm').onclick=confirmPeriodModal;
 
 document.getElementById('tdahToggle').onclick=()=>{tmpTdah=!tmpTdah;if(!tmpTdah)tmpMg=0;paintTdah();paintDoses();};
 document.getElementById('doses').addEventListener('click',e=>{const b=e.target.closest('.dose');if(!b)return;tmpMg=+b.dataset.mg;paintDoses();});
