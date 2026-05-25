@@ -483,7 +483,7 @@
 /* ===================== modelos populacionais ===================== */
 const BASE=[-70,-75,-60,-40,-15,10,25,40,55,70,80,88,90,85,70,55,40,25,10,-5,-20,-35,-50,-60,-70,-78,-82,-85];
 const FOCUS_BASE=[-55,-62,-55,-40,-20,5,25,45,62,76,84,80,55,72,80,70,55,38,18,-2,-22,-40,-55,-66,-72,-70,-64,-58];
-const PERIOD_DAYS=5, OVU_BASE=13;
+const PERIOD_DAYS=6, OVU_BASE=13;
 
 function resample(arr,len){const o=[];for(let i=0;i<len;i++){const t=i/(len-1)*(arr.length-1);const a=Math.floor(t),b=Math.min(a+1,arr.length-1),f=t-a;o.push(Math.round(arr[a]*(1-f)+arr[b]*f));}return o;}
 const moodCurve=len=>resample(BASE,len);
